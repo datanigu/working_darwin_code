@@ -1,0 +1,4 @@
+ross_sea_working/run/*
+ross_sea_working/build/*
+!ross_sea_working/run/data*
+!ross_sea_working/run/eedata
