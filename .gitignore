@@ -2,3 +2,9 @@ ross_sea_working/run/*
 ross_sea_working/build/*
 !ross_sea_working/run/data*
 !ross_sea_working/run/eedata
+.DS_Store
+darwin3_working/.DS_Store
+ross_sea_working/code/.DS_Store
+darwin3_working/pkg/.DS_Store
+darwin3_working/tools/darwin/__pycache_/*
+darwin3_working/tools/darwin/cogapp/*
