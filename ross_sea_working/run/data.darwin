@@ -153,4 +153,7 @@
  b_kgrazesat(:)= 7*0,
 #
  grp_ass_eff(:,:)=49*0.32,
+
+ a_bioswim(5) = 0.01,
+
  /
