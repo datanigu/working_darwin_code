@@ -298,9 +298,19 @@ C for grazing
       _RL respirFe
       _RL respirSi
 
+
+
+
 #ifdef DARWIN_ALLOW_CDOM
       _RL graz2CDOM, exude_CDOM
 #endif
+
+C Egestion, D.T.
+      _RL egest_POC
+C      _RL egest_PON
+C      _RL egest_POP
+C      _RL egest_POFe
+C      _RL egest_POSi
 
       _RL DARWIN_EPS
       PARAMETER(DARWIN_EPS=1 _d -38)
@@ -1607,6 +1617,32 @@ C to DIC as if it had never been synthesized.
         gTr(ife+jp-1)=gTr(ife+jp-1) - kexcfe(jp)*Xe*Qfe(jp)
 #endif
 #endif
+
+C==== Egestion =========
+        IF (isPred(jp) .EQ. 1) THEN
+         egest_POC  = egest_POC  + egestc(jp)*Xe !may need a temperature dependence
+C         egest_PON  = egest_PON  + egestn(jp)*Xe*Qn(jp)
+C         egest_POP  = egest_POP  + egestp(jp)*Xe*Qp(jp)
+C         egest_POFe = egest_POFe + egestfe(jp)*Xe*Qfe(jp)
+C         egest_POSi = egest_POSi + egestsi(jp)*Xe*Qsi(jp)
+C
+         gTr(ic+jp-1) = gTr(ic+jp-1) - egestc(jp)*Xe
+C#ifdef DARWIN_ALLOW_NQUOTA
+C         gTr(in+jp-1) = gTr(in+jp-1) - egestn(jp)*Xe*Qn(jp)
+C#endif
+C#ifdef DARWIN_ALLOW_PQUOTA
+C         gTr(ip+jp-1) = gTr(ip+jp-1) - egestp(jp)*Xe*Qp(jp)
+C#endif
+C#ifdef DARWIN_ALLOW_FEQUOTA
+C         gTr(ife+jp-1) = gTr(ife+jp-1) - egestfe(jp)*Xe*Qfe(jp)
+C#endif
+C#ifdef DARWIN_ALLOW_SIQUOTA
+C         gTr(isi+jp-1) = gTr(isi+jp-1) - egestsi(jp)*Xe*Qsi(jp)
+C#endif
+        ENDIF !End predator designation for egestion
+
+
+        
       ENDDO
 
 #ifdef DARWIN_ALLOW_CHLQUOTA
@@ -1636,13 +1672,13 @@ C to DIC as if it had never been synthesized.
 
       diags(iRespirDIC) = respir
 
-      gTr(iDOC )=gTr(iDOC ) + exude_DOC
+      gTr(iDOC )=gTr(iDOC ) + exude_DOC 
       gTr(iDON )=gTr(iDON ) + exude_DON
       gTr(iDOP )=gTr(iDOP ) + exude_DOP
       gTr(iDOFe)=gTr(iDOFe) + exude_DOFe
 
       gTr(iPIC )=gTr(iPIC ) + exude_PIC
-      gTr(iPOC )=gTr(iPOC ) + exude_POC
+      gTr(iPOC )=gTr(iPOC ) + exude_POC + egest_POC
       gTr(iPON )=gTr(iPON ) + exude_PON
       gTr(iPOP )=gTr(iPOP ) + exude_POP
       gTr(iPOSi)=gTr(iPOSi) + exude_POSi

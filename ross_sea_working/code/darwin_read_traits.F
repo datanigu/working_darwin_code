@@ -126,7 +126,12 @@
      &    ksatDON,
      &    ksatDOC,
      &    ksatDOP,
-     &    ksatDOFe
+     &    ksatDOFe,
+     &    egestc,
+     &    egestn,
+     &    egestp,
+     &    egestfe,
+     &    egestsi
 
       NAMELIST/DARWIN_DEPENDENT_TRAITS/
 #ifndef DARWIN_ALLOW_GEIDER
