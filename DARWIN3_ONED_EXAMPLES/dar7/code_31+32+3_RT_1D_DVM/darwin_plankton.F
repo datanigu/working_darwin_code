@@ -1679,10 +1679,10 @@ C#endif
 
       gTr(iPIC )=gTr(iPIC ) + exude_PIC
       gTr(iPOC )=gTr(iPOC ) + exude_POC + egest_POC
-      gTr(iPON )=gTr(iPON ) + exude_PON
-      gTr(iPOP )=gTr(iPOP ) + exude_POP
-      gTr(iPOSi)=gTr(iPOSi) + exude_POSi
-      gTr(iPOFe)=gTr(iPOFe) + exude_POFe
+      gTr(iPON )=gTr(iPON ) + exude_PON !+ egest_PON
+      gTr(iPOP )=gTr(iPOP ) + exude_POP !+ egest_POP
+      gTr(iPOSi)=gTr(iPOSi) + exude_POSi !+ egest_POSi
+      gTr(iPOFe)=gTr(iPOFe) + exude_POFe !+ egest_POFe
 #ifdef DARWIN_ALLOW_CDOM
 # ifdef DARWIN_CDOM_UNITS_CARBON
       exude_CDOM = fracCDOM*exude_DOC
