@@ -312,6 +312,7 @@ C      _RL egest_POP
 C      _RL egest_POFe
 C      _RL egest_POSi
 
+
       _RL DARWIN_EPS
       PARAMETER(DARWIN_EPS=1 _d -38)
 
@@ -448,6 +449,7 @@ C==== Initialize accumulators ==========================================
       prodNO2 = 0.0
       prodNO3 = 0.0
       respir = 0.0 _d 0
+      egest_POC = 0.0 _d 0
 #ifdef DARWIN_ALLOW_CSTORE
       excC = 0.0
 #endif
@@ -1642,8 +1644,9 @@ C#endif
         ENDIF !End predator designation for egestion
 
 
-        
-      ENDDO
+
+
+      ENDDO !DO from near beg. of mortality and exudation
 
 #ifdef DARWIN_ALLOW_CHLQUOTA
       DO jp = 1, nPhoto
