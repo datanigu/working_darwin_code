@@ -570,7 +570,8 @@ C     [Mongin 2006]
       b_kexcFe = 0.00 _d 0
       grp_ExportFracPreyPred = 0.5 _d 0
       grp_ass_eff = 0.7 _d 0
-      a_egestc = 8.0 _d 0 /pday ![Biachi et al 2013]
+      a_egestc = 0.00 _d 0 
+C     a_egestc = 8.0 _d 0 /pday ![Biachi et al 2013]
       b_egestc = 0.00 _d 0
       a_egestn = 0.00 _d 0
       b_egestn = 0.00 _d 0
@@ -580,6 +581,7 @@ C     [Mongin 2006]
       b_egestfe = 0.00 _d 0
       a_egestsi = 0.00 _d 0
       b_egestsi = 0.00 _d 0
+
 
       READ(UNIT=iUnit, NML=DARWIN_TRAIT_PARAMS)
 
