@@ -450,7 +450,18 @@ C
      &    a_kexcFe,
      &    b_kexcFe,
      &    grp_ExportFracPreyPred,
-     &    grp_ass_eff
+     &    grp_ass_eff,
+     &    a_egestc,
+     &    b_egestc,
+     &    a_egestn,
+     &    b_egestn,
+     &    a_egestp,
+     &    b_egestp,
+     &    a_egestfe,
+     &    b_egestfe,
+     &    a_egestsi,
+     &    b_egestsi
+
       _RL logvolbase
       _RL logvolinc
       _RL biovol0(nGroup)
@@ -583,6 +594,16 @@ C
       _RL b_kexcFe(nGroup)
       _RL grp_ExportFracPreyPred(nGroup,nGroup)
       _RL grp_ass_eff(nGroup,nGroup)
+      _RL a_egestc(nGroup)
+      _RL b_egestc(nGroup)
+      _RL a_egestn(nGroup)
+      _RL b_egestn(nGroup)
+      _RL a_egestp(nGroup)
+      _RL b_egestp(nGroup)
+      _RL a_egestfe(nGroup)
+      _RL b_egestfe(nGroup)
+      _RL a_egestsi(nGroup)
+      _RL b_egestsi(nGroup)
 
 #endif /* ALLOW_DARWIN */
 

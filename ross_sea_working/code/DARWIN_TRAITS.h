@@ -162,6 +162,16 @@ C     ksatDON            :: [mmol N m^-3]   half-saturation of DON for bacterial
 C     ksatDOC            :: [mmol C m^-3]   half-saturation of DOC for bacterial growth
 C     ksatDOP            :: [mmol P m^-3]   half-saturation of DOP for bacterial growth
 C     ksatDOFe           :: [mmol Fe m^-3]  half-saturation of DOFe for bacterial growth
+C
+C- Egestion
+C     egestc             :: [s^-1]          egestion of POC
+C     egestn             :: [s^-1]          egestion of PON 
+C     egestp             :: [s^-1]          egestion of POP
+C     egestfe            :: [s^-1]          egestion of POFe
+C     egestsi            :: [s^-1]          egestion of POSi
+
+
+
       COMMON /DARWIN_TRAITS_r/
      &    Xmin,
      &    amminhib,
@@ -245,7 +255,12 @@ C     ksatDOFe           :: [mmol Fe m^-3]  half-saturation of DOFe for bacteria
      &    ksatDON,
      &    ksatDOC,
      &    ksatDOP,
-     &    ksatDOFe
+     &    ksatDOFe,
+     &    egestc, 
+     &    egestn,
+     &    egestp,
+     &    egestfe,
+     &    egestsi
       _RL Xmin(nplank)
       _RL amminhib(nplank)
       _RL acclimtimescl(nplank)
@@ -329,6 +344,11 @@ C     ksatDOFe           :: [mmol Fe m^-3]  half-saturation of DOFe for bacteria
       _RL ksatDOC(nplank)
       _RL ksatDOP(nplank)
       _RL ksatDOFe(nplank)
+      _RL egestc(nplank)
+      _RL egestn(nplank)
+      _RL egestp(nplank)
+      _RL egestfe(nplank)
+      _RL egestsi(nplank)
 
 C--   COMMON /DARWIN_DEPENDENT_TRAITS_i/ Dependent and constant (not read-in) parameters
 C     group  :: which group this type belongs to
