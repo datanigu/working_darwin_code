@@ -449,7 +449,7 @@ C==== Initialize accumulators ==========================================
       prodNO2 = 0.0
       prodNO3 = 0.0
       respir = 0.0 _d 0
-      egest_POC = 0.0 _d 0
+
 #ifdef DARWIN_ALLOW_CSTORE
       excC = 0.0
 #endif
@@ -1510,7 +1510,8 @@ C==== Mortality and parameterized exudation ============================
       respirP    = 0.0 _d 0
       respirFe   = 0.0 _d 0
       respirSi   = 0.0 _d 0
-
+      egest_POC = 0.0 _d 0
+      
       DO jp = 1, nplank
         Xe = MAX(0 _d 0, X(jp) - Xmin(jp))
         mortX = mort(jp)*Xe*mortTempFunc**tempMort(jp)
@@ -1642,7 +1643,6 @@ C#ifdef DARWIN_ALLOW_SIQUOTA
 C         gTr(isi+jp-1) = gTr(isi+jp-1) - egestsi(jp)*Xe*Qsi(jp)
 C#endif
         ENDIF !End predator designation for egestion
-
 
 
 
