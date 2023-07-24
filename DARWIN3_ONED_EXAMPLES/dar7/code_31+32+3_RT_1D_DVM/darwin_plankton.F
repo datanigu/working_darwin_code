@@ -1622,7 +1622,7 @@ C to DIC as if it had never been synthesized.
 #endif
 
 C==== Egestion =========
-        IF (isPred(jp) .EQ. 1) THEN
+        IF (isPred(jp) .EQ. 1. AND. isPhoto(jp) .NE. 1) THEN
          egest_POC  = egest_POC  + egestc(jp)*Xe !may need a temperature dependence
 C         egest_PON  = egest_PON  + egestn(jp)*Xe*Qn(jp)
 C         egest_POP  = egest_POP  + egestp(jp)*Xe*Qp(jp)
