@@ -1308,9 +1308,19 @@ C       regulate grazing near full quota
         ENDDO
         sumprey = MAX(0.0, sumprey - phygrazmin)
         sumpref = MAX(phygrazmin, sumpref)
+
+C        IF (isPrey .EQ. 1) THEN ! Not higher order predator
+
         tmp = grazemax(jz)*grazTempFunc(jz)**tempGraz(jz)*
      &    (sumprey**hollexp/(sumprey**hollexp+kgrazesat(jz)**hollexp))*
      &    (1.0 - EXP(-inhib_graz*sumprey))**inhib_graz_exp
+
+C        ELSE 
+
+C        tmp = grazemaxHP(jz)*grazTempFunc(jz)**tempGraz(jp)*
+C     &     (sumprey/(sumprey + kgrazesatHP(jz))) * ((1-alphaV) + 
+C     &     alphaV * PARtot / (kgrazesatHP(jz) /
+C     &     ((kgrazesatHP(jz)+sumprey)*kgrazeirr(jz))+PARtot))
 
         predexpc  = 0.0 _d 0
         predexpn  = 0.0 _d 0
@@ -1643,6 +1653,8 @@ C#ifdef DARWIN_ALLOW_SIQUOTA
 C         gTr(isi+jp-1) = gTr(isi+jp-1) - egestsi(jp)*Xe*Qsi(jp)
 C#endif
         ENDIF !End predator designation for egestion
+
+
 
 
 
