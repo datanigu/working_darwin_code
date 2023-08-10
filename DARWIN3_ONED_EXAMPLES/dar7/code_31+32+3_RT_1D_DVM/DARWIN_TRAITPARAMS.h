@@ -460,7 +460,9 @@ C
      &    a_egestfe,
      &    b_egestfe,
      &    a_egestsi,
-     &    b_egestsi
+     &    b_egestsi,
+     &    a_light_pref,
+     &    b_light_pref
 
       _RL logvolbase
       _RL logvolinc
@@ -604,6 +606,8 @@ C
       _RL b_egestfe(nGroup)
       _RL a_egestsi(nGroup)
       _RL b_egestsi(nGroup)
+      _RL a_light_pref(nGroup)
+      _RL b_light_pref(nGroup)
 
 #endif /* ALLOW_DARWIN */
 

@@ -131,7 +131,8 @@
      &    egestn,
      &    egestp,
      &    egestfe,
-     &    egestsi
+     &    egestsi,
+     &    light_pref
 
       NAMELIST/DARWIN_DEPENDENT_TRAITS/
 #ifndef DARWIN_ALLOW_GEIDER

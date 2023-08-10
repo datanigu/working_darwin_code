@@ -170,6 +170,9 @@ C     egestp             :: [s^-1]          egestion of POP
 C     egestfe            :: [s^-1]          egestion of POFe
 C     egestsi            :: [s^-1]          egestion of POSi
 
+C- Isolume preference
+C     light_pref       :: [µEin/m2/s]     preferred isolume for determining DVM
+
 
 
       COMMON /DARWIN_TRAITS_r/
@@ -260,7 +263,8 @@ C     egestsi            :: [s^-1]          egestion of POSi
      &    egestn,
      &    egestp,
      &    egestfe,
-     &    egestsi
+     &    egestsi,
+     &    light_pref
       _RL Xmin(nplank)
       _RL amminhib(nplank)
       _RL acclimtimescl(nplank)
@@ -349,6 +353,7 @@ C     egestsi            :: [s^-1]          egestion of POSi
       _RL egestp(nplank)
       _RL egestfe(nplank)
       _RL egestsi(nplank)
+      _RL light_pref(nplank)
 
 C--   COMMON /DARWIN_DEPENDENT_TRAITS_i/ Dependent and constant (not read-in) parameters
 C     group  :: which group this type belongs to

@@ -311,6 +311,9 @@ C Egestion
         egestfe(jp) = a_egestfe(g) * biovol(jp)**b_egestfe(g)
         egestsi(jp) = a_egestsi(g) * biovol(jp)**b_egestsi(g)
 
+C Light preference for DVM
+        light_pref(jp) = a_light_pref(g)*biovol(jp)**b_light_pref(g)
+
 
         IF (darwin_effective_ksat) THEN
 c        compute effective half sat for uptake of non-quota elements

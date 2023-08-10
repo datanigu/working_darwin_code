@@ -280,7 +280,9 @@
      &    a_egestfe,
      &    b_egestfe,
      &    a_egestsi,
-     &    b_egestsi
+     &    b_egestsi,
+     &    a_light_pref,
+     &    b_light_pref
 
 
 
@@ -581,6 +583,8 @@ C     a_egestc = 8.0 _d 0 /pday ![Biachi et al 2013]
       b_egestfe = 0.00 _d 0
       a_egestsi = 0.00 _d 0
       b_egestsi = 0.00 _d 0
+      a_light_pref = 0.0046 ![~10^-3 W/m2, Bianchi et al. 2013]
+      b_light_pref = 0.00 _d 0
 
 
       READ(UNIT=iUnit, NML=DARWIN_TRAIT_PARAMS)
