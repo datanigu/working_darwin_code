@@ -161,7 +161,7 @@ C---+----1----+----2----+----3----+----4----+----5----+----6----+----7-|--+----|
         CALL DIAGNOSTICS_ADDTOLIST( diagNum,
      I             diagName, diagCode, diagUnits, diagTitle, 0, myThid )
         
-        WRITE(diagName,'(A,I3.3)')'gradPARF',j
+        WRITE(diagName,'(A,I3.3)')'gPARF',j
         WRITE(diagTitle,'(A,I3)')'gradient in PARF, waveband ',j
         diagUnits = 'uEin/m^2/s      '
         diagCode  = 'SM P    LR      '
@@ -267,7 +267,7 @@ C---+----1----+----2----+----3----+----4----+----5----+----6----+----7-|--+----|
       CALL DIAGNOSTICS_ADDTOLIST( diagNum,
      I           diagName, diagCode, diagUnits, diagTitle, 0, myThid )
 
-      WRITE(diagName,'(A)')'gradPARF'
+      WRITE(diagName,'(A)')'gPARF'
       WRITE(diagTitle,'(A)')'gradient in PARF'
       diagUnits = 'uEin/m^2/s      '
       diagCode  = 'SM P    LR      '
