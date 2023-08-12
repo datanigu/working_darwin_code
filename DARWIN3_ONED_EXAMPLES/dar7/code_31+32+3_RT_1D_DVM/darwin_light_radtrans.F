@@ -65,6 +65,7 @@ C  k                    :: vertical level
 #endif
       _RL E0F(1-OLx:sNx+OLx, 1-OLy:sNy+OLy, Nr+1, nlam)
       _RL PARF(1-OLx:sNx+OLx, 1-OLy:sNy+OLy, Nr+1, nlam)
+      _RL gradPARF(1-OLx:sNx+OLx, 1-OLy:sNy+OLy, Nr, nlam)
       _RL actot
       _RL bctot
       _RL bbctot
@@ -205,6 +206,9 @@ C ======================================================================
        WRITE(diagname, '(A,I3.3)') 'PARF', l
        CALL DIAGNOSTICS_FILL(PARF(1-OLx,1-OLy,1,l),diagname,0,Nr,2,
      &       bi,bj,myThid)
+       WRITE(diagname, '(A,I3.3)') 'gradPARF', l
+       CALL DIAGNOSTICS_FILL(gradPARF(1-OLx,1-OLy,1,l),diagname,0,Nr,2,
+     &       bi,bj,myThid)
 #ifdef DARWIN_DIAG_IOP
        WRITE(diagname, '(A,I3.3)') 'a', l
        CALL DIAGNOSTICS_FILL(a3d(1-OLx,1-OLy,1,l),diagname,0,Nr,2,
@@ -250,6 +254,18 @@ C ======================================================================
         ENDDO
         WRITE(diagname, '(A)') 'PARF'
         CALL DIAGNOSTICS_FILL(PARF,diagname,0,Nr,2,bi,bj,myThid)
+
+        DO l=2,nlam
+         DO k=1,Nr-1
+          DO j=jMin,jMax
+           DO i= iMin,iMax
+            gradPARF(i,j,k,1) = PARF(i,j,k+1,1) - PARF(i,j,k,l)
+           ENDDO
+          ENDDO
+         ENDDO
+        ENDDO
+        WRITE(diagname, '(A)') 'gradPARF'
+        CALL DIAGNOSTICS_FILL(gradPARF,diagname,0,Nr-1,2,bi,bj,myThid)
        ENDIF
 C PAR is done in darwin_forcing
       ENDIF

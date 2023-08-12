@@ -290,6 +290,20 @@
   fields( 50,4) = 'PAR011  ',
   fields( 51,4) = 'PAR012  ',
   fields( 52,4) = 'PAR013  ',
+  fields( 40,4) = 'gradPARF001  ',
+  fields( 41,4) = 'gradPARF002  ',
+  fields( 42,4) = 'gradPARF003  ',
+  fields( 43,4) = 'gradPARF004  ',
+  fields( 44,4) = 'gradPARF005  ',
+  fields( 45,4) = 'gradPARF006  ',
+  fields( 46,4) = 'gradPARF007  ',
+  fields( 47,4) = 'gradPARF008  ',
+  fields( 48,4) = 'gradPARF009  ',
+  fields( 49,4) = 'gradPARF010  ',
+  fields( 50,4) = 'gradPARF011  ',
+  fields( 51,4) = 'gradPARF012  ',
+  fields( 52,4) = 'gradPARF013  ',
+  
 #
 #
   filename( 5) = 'nutr_tend',

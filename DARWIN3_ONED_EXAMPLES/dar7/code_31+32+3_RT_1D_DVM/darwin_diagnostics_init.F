@@ -160,6 +160,13 @@ C---+----1----+----2----+----3----+----4----+----5----+----6----+----7-|--+----|
         diagCode  = 'SM P    LR      '
         CALL DIAGNOSTICS_ADDTOLIST( diagNum,
      I             diagName, diagCode, diagUnits, diagTitle, 0, myThid )
+        
+        WRITE(diagName,'(A,I3.3)')'gradPARF',j
+        WRITE(diagTitle,'(A,I3)')'gradient in PARF, waveband ',j
+        diagUnits = 'uEin/m^2/s      '
+        diagCode  = 'SM P    LR      '
+        CALL DIAGNOSTICS_ADDTOLIST( diagNum,
+     I             diagName, diagCode, diagUnits, diagTitle, 0, myThid )
 
 #ifdef DARWIN_DIAG_IOP
         WRITE(diagName,'(A,I3.3)')'a',j
@@ -259,6 +266,14 @@ C---+----1----+----2----+----3----+----4----+----5----+----6----+----7-|--+----|
       diagCode  = 'SM P    LR      '
       CALL DIAGNOSTICS_ADDTOLIST( diagNum,
      I           diagName, diagCode, diagUnits, diagTitle, 0, myThid )
+
+      WRITE(diagName,'(A)')'gradPARF'
+      WRITE(diagTitle,'(A)')'gradient in PARF'
+      diagUnits = 'uEin/m^2/s      '
+      diagCode  = 'SM P    LR      '
+      CALL DIAGNOSTICS_ADDTOLIST( diagNum,
+     I           diagName, diagCode, diagUnits, diagTitle, 0, myThid )
+
 
       WRITE(diagName,'(A)')'PAR'
       WRITE(diagTitle,'(A,I3)')'total PAR at layer center'
