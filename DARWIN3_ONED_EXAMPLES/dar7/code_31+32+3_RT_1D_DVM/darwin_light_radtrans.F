@@ -65,7 +65,7 @@ C  k                    :: vertical level
 #endif
       _RL E0F(1-OLx:sNx+OLx, 1-OLy:sNy+OLy, Nr+1, nlam)
       _RL PARF(1-OLx:sNx+OLx, 1-OLy:sNy+OLy, Nr+1, nlam)
-C      _RL gPARF(1-OLx:sNx+OLx, 1-OLy:sNy+OLy, Nr, nlam)
+      _RL gPARF(1-OLx:sNx+OLx, 1-OLy:sNy+OLy, Nr, nlam)
       _RL actot
       _RL bctot
       _RL bbctot
@@ -206,9 +206,9 @@ C ======================================================================
        WRITE(diagname, '(A,I3.3)') 'PARF', l
        CALL DIAGNOSTICS_FILL(PARF(1-OLx,1-OLy,1,l),diagname,0,Nr,2,
      &       bi,bj,myThid)
-C       WRITE(diagname, '(A,I3.3)') 'gPARF', l
-C       CALL DIAGNOSTICS_FILL(gPARF(1-OLx,1-OLy,1,l),diagname,0,Nr,2,
-C     &       bi,bj,myThid)
+       WRITE(diagname, '(A,I3.3)') 'gPARF', l
+       CALL DIAGNOSTICS_FILL(gPARF(1-OLx,1-OLy,1,l),diagname,0,Nr,2,
+     &       bi,bj,myThid)
 #ifdef DARWIN_DIAG_IOP
        WRITE(diagname, '(A,I3.3)') 'a', l
        CALL DIAGNOSTICS_FILL(a3d(1-OLx,1-OLy,1,l),diagname,0,Nr,2,
@@ -255,19 +255,19 @@ C     &       bi,bj,myThid)
         WRITE(diagname, '(A)') 'PARF'
         CALL DIAGNOSTICS_FILL(PARF,diagname,0,Nr,2,bi,bj,myThid)
 
-C       IF (DIAGNOSTICS_IS_ON('gPARF    ', myThid)) THEN
-C        DO l=2,nlam
-C         DO k=1,Nr-1
-C          DO j=jMin,jMax
-C           DO i= iMin,iMax
-C            gPARF(i,j,k,1) = PARF(i,j,k+1,1) - PARF(i,j,k,l)
-C           ENDDO
-C          ENDDO
-C         ENDDO
-C        ENDDO
-C        WRITE(diagname, '(A)') 'gPARF'
-C        CALL DIAGNOSTICS_FILL(gPARF,diagname,0,Nr-1,2,bi,bj,myThid)
-C       ENDIF
+       IF (DIAGNOSTICS_IS_ON('gPARF    ', myThid)) THEN
+        DO l=2,nlam
+         DO k=1,Nr-1
+          DO j=jMin,jMax
+           DO i= iMin,iMax
+            gPARF(i,j,k,1) = PARF(i,j,k+1,1) - PARF(i,j,k,l)
+           ENDDO
+          ENDDO
+         ENDDO
+        ENDDO
+        WRITE(diagname, '(A)') 'gPARF'
+        CALL DIAGNOSTICS_FILL(gPARF,diagname,0,Nr-1,2,bi,bj,myThid)
+       ENDIF
 C PAR is done in darwin_forcing
       ENDIF
 #endif

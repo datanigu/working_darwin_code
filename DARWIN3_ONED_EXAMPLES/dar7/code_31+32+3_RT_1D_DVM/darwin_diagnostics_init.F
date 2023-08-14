@@ -161,12 +161,12 @@ C---+----1----+----2----+----3----+----4----+----5----+----6----+----7-|--+----|
         CALL DIAGNOSTICS_ADDTOLIST( diagNum,
      I             diagName, diagCode, diagUnits, diagTitle, 0, myThid )
         
-C        WRITE(diagName,'(A,I3.3)')'gPARF',j
-C        WRITE(diagTitle,'(A,I3)')'gradient in PARF, waveband ',j
-C        diagUnits = 'uEin/m^2/s      '
-C        diagCode  = 'SM P    LR      '
-C        CALL DIAGNOSTICS_ADDTOLIST( diagNum,
-C     I             diagName, diagCode, diagUnits, diagTitle, 0, myThid )
+        WRITE(diagName,'(A,I3.3)')'gPARF',j
+        WRITE(diagTitle,'(A,I3)')'gradient in PARF, waveband ',j
+        diagUnits = 'uEin/m^2/s      '
+        diagCode  = 'SM P    LR      '
+        CALL DIAGNOSTICS_ADDTOLIST( diagNum,
+     I             diagName, diagCode, diagUnits, diagTitle, 0, myThid )
 
 #ifdef DARWIN_DIAG_IOP
         WRITE(diagName,'(A,I3.3)')'a',j
@@ -267,12 +267,12 @@ C     I             diagName, diagCode, diagUnits, diagTitle, 0, myThid )
       CALL DIAGNOSTICS_ADDTOLIST( diagNum,
      I           diagName, diagCode, diagUnits, diagTitle, 0, myThid )
 
-C      WRITE(diagName,'(A)')'gPARF'
-C      WRITE(diagTitle,'(A)')'gradient in PARF'
-C      diagUnits = 'uEin/m^2/s      '
-C      diagCode  = 'SM P    LR      '
-C      CALL DIAGNOSTICS_ADDTOLIST( diagNum,
-C     I           diagName, diagCode, diagUnits, diagTitle, 0, myThid )
+      WRITE(diagName,'(A)')'gPARF'
+      WRITE(diagTitle,'(A)')'gradient in PARF'
+      diagUnits = 'uEin/m^2/s      '
+      diagCode  = 'SM P    LR      '
+      CALL DIAGNOSTICS_ADDTOLIST( diagNum,
+     I           diagName, diagCode, diagUnits, diagTitle, 0, myThid )
 
 
       WRITE(diagName,'(A)')'PAR'
