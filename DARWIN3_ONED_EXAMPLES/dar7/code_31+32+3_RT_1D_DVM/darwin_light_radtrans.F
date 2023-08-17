@@ -207,7 +207,7 @@ C ======================================================================
        CALL DIAGNOSTICS_FILL(PARF(1-OLx,1-OLy,1,l),diagname,0,Nr,2,
      &       bi,bj,myThid)
        WRITE(diagname, '(A,I3.3)') 'gPARF', l
-       CALL DIAGNOSTICS_FILL(gPARF(1-OLx,1-OLy,1,l),diagname,0,Nr,2,
+       CALL DIAGNOSTICS_FILL(gPARF(1-OLx,1-OLy,1,l),diagname,0,Nr-1,2,
      &       bi,bj,myThid)
 #ifdef DARWIN_DIAG_IOP
        WRITE(diagname, '(A,I3.3)') 'a', l
@@ -254,7 +254,7 @@ C ======================================================================
         ENDDO
         WRITE(diagname, '(A)') 'PARF'
         CALL DIAGNOSTICS_FILL(PARF,diagname,0,Nr,2,bi,bj,myThid)
-
+       ENDIF
        IF (DIAGNOSTICS_IS_ON('gPARF    ', myThid)) THEN
         DO l=2,nlam
          DO k=1,Nr-1
