@@ -256,15 +256,15 @@ C ======================================================================
         CALL DIAGNOSTICS_FILL(PARF,diagname,0,Nr,2,bi,bj,myThid)
        ENDIF
        IF (DIAGNOSTICS_IS_ON('gPARF    ', myThid)) THEN
-        DO l=2,nlam
+C        DO l=2,nlam
          DO k=1,Nr-1
           DO j=jMin,jMax
            DO i= iMin,iMax
-            gPARF(i,j,k,1) = PARF(i,j,k+1,1) - PARF(i,j,k,l)
+            gPARF(i,j,k,1) = PARF(i,j,k,1) - PARF(i,j,k+1,1)
            ENDDO
           ENDDO
          ENDDO
-        ENDDO
+C        ENDDO
         WRITE(diagname, '(A)') 'gPARF'
         CALL DIAGNOSTICS_FILL(gPARF,diagname,0,Nr-1,2,bi,bj,myThid)
        ENDIF
