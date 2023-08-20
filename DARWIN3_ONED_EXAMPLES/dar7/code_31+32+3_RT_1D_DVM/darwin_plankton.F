@@ -1632,7 +1632,7 @@ C to DIC as if it had never been synthesized.
 #endif
 
 C==== Egestion =========
-        IF (isPred(jp) .EQ. 1. AND. isPhoto(jp) .NE. 1) THEN
+        IF (isPred(jp) .EQ. 1 .AND. isPhoto(jp) .NE. 1) THEN !maybe IF (isPred(jp) .EQ. 1 .AND. isPrey .EQ. 0)
          egest_POC  = egest_POC  + egestc(jp)*Xe !may need a temperature dependence
 C         egest_PON  = egest_PON  + egestn(jp)*Xe*Qn(jp)
 C         egest_POP  = egest_POP  + egestp(jp)*Xe*Qp(jp)
@@ -1652,9 +1652,20 @@ C#endif
 C#ifdef DARWIN_ALLOW_SIQUOTA
 C         gTr(isi+jp-1) = gTr(isi+jp-1) - egestsi(jp)*Xe*Qsi(jp)
 C#endif
-        ENDIF !End predator designation for egestion
+
+C========Swimming ==============
+C If upward gradient pos and PARtot LT isolume_pref, swim up
+C If upward gradient neg or 0 and PARtot LT isolume_pref, no swim
+C If PARtot GT isolume_pref, no matter gradient, swim down 
+
+C        IF (PARtot .LT. light_pref) THEN
+C                bioswim = 0
+
+        ENDIF !End predator designation for egestion and swimming
 
 
+   
+         
 
 
 
