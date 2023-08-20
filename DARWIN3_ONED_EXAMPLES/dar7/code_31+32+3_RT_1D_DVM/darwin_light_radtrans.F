@@ -5,6 +5,7 @@ C !ROUTINE: DARWIN_LIGHT_RADTRANS
 C !INTERFACE: ==========================================================
       SUBROUTINE DARWIN_LIGHT_RADTRANS(
      O                         PAR,
+     O                         gPARF,
      I                         solTime,
      I                         bi, bj, iMin, iMax, jMin, jMax,
      I                         myTime, myIter, myThid )
