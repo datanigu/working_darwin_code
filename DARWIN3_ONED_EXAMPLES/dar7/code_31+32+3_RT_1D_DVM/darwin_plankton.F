@@ -1656,12 +1656,17 @@ C         gTr(isi+jp-1) = gTr(isi+jp-1) - egestsi(jp)*Xe*Qsi(jp)
 C#endif
 
 C========Swimming ==============
-C If upward gradient pos and PARtot LT isolume_pref, swim up
-C If upward gradient neg or 0 and PARtot LT isolume_pref, no swim
-C If PARtot GT isolume_pref, no matter gradient, swim down 
+C Added in by D.T.
+C If upward gradient pos and PARtot LT light_pref, swim up as usu.
+C If upward gradient neg or 0 and PARtot LT light_pref, no swim
+C If PARtot GT light_pref, no matter gradient, swim down 
 
-C        IF (PARtot .LT. light_pref) THEN
+C        IF (gPARF .GT. 0 .AND. PARtot .LT. ligth_pref) THEN
+C                bioswim = bioswim ! this is just a placeholder, D.T.  
+C        IF (gPARF .LE. 0 .AND. PARtot .LT. light_pref) THEN
 C                bioswim = 0
+C        IF (PARtot .GT. light_pref) THEN
+C                bioswim = -bioswim
 
         ENDIF !End predator designation for egestion and swimming
 
