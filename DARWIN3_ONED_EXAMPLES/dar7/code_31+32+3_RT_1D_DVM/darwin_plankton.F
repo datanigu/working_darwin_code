@@ -7,7 +7,8 @@ C !INTERFACE: ==========================================================
      I     Ptr,
      U     gTr,
      O     chlout, diags,
-     I     PAR, photoTempFunc, hetTempFunc, grazTempFunc, reminTempFunc,
+     I     PAR, dtest,
+     I     photoTempFunc, hetTempFunc, grazTempFunc, reminTempFunc,
      I     mortTempFunc, mort2TempFunc, uptakeTempFunc,
      I     k_debug,myTime,myIter,myThid)
 
@@ -34,6 +35,7 @@ C  myIter :: current iteration number
 C  myThid :: thread number
       _RL Ptr(nDarwin)
       _RL PAR(nlam)
+      _RL dtest
       _RL photoTempFunc(nplank)
       _RL hetTempFunc(nplank)
       _RL reminTempFunc
