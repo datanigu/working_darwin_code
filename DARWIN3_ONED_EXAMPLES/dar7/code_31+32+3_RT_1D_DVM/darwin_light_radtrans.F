@@ -5,7 +5,7 @@ C !ROUTINE: DARWIN_LIGHT_RADTRANS
 C !INTERFACE: ==========================================================
       SUBROUTINE DARWIN_LIGHT_RADTRANS(
      O                         PAR,
-     O                         dtest,
+     O                         gPARF,
      I                         solTime,
      I                         bi, bj, iMin, iMax, jMin, jMax,
      I                         myTime, myIter, myThid )
@@ -43,7 +43,7 @@ C  myThid :: thread number
 
 C !OUTPUT PARAMETERS: ==================================================
       _RL PAR(1-OLx:sNx+OLx, 1-OLy:sNy+OLy, Nr, nlam)
-      _RL dtest
+      _RL gPARF(1-OLx:sNx+OLx, 1-OLy:sNy+OLy, Nr-1, nlam)
 CEOP
 
 #ifdef ALLOW_DARWIN
@@ -67,8 +67,6 @@ C  k                    :: vertical level
 #endif
       _RL E0F(1-OLx:sNx+OLx, 1-OLy:sNy+OLy, Nr+1, nlam)
       _RL PARF(1-OLx:sNx+OLx, 1-OLy:sNy+OLy, Nr+1, nlam)
-      _RL gPARF(1-OLx:sNx+OLx, 1-OLy:sNy+OLy, Nr, nlam)
-C      _RL dtest
       _RL actot
       _RL bctot
       _RL bbctot
@@ -92,7 +90,6 @@ C
 #endif
 
 C ======================================================================
-      dtest = 3.0
       DO j=jMin,jMax
        DO i=iMin,iMax
         DO k=1,Nr
