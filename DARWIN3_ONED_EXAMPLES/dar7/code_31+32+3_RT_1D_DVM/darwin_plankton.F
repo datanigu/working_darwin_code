@@ -1311,14 +1311,14 @@ C       regulate grazing near full quota
         sumprey = MAX(0.0, sumprey - phygrazmin)
         sumpref = MAX(phygrazmin, sumpref)
 
-C        IF (isPrey .EQ. 1) THEN ! Not higher order predator
+C        IF (isPrey .EQ. 1) THEN ! Not higher order predator, D.T.
 
         tmp = grazemax(jz)*grazTempFunc(jz)**tempGraz(jz)*
      &    (sumprey**hollexp/(sumprey**hollexp+kgrazesat(jz)**hollexp))*
      &    (1.0 - EXP(-inhib_graz*sumprey))**inhib_graz_exp
 
 C        ELSE 
-
+C Higher order predator grazing
 C        tmp = grazemaxHP(jz)*grazTempFunc(jz)**tempGraz(jp)*
 C     &     (sumprey/(sumprey + kgrazesatHP(jz))) * ((1-alphaV) + 
 C     &     alphaV * PARtot / (kgrazesatHP(jz) /
@@ -1634,7 +1634,7 @@ C to DIC as if it had never been synthesized.
 #endif
 
 C==== Egestion =========
-        IF (isPred(jp) .EQ. 1 .AND. isPhoto(jp) .NE. 1) THEN !maybe IF (isPred(jp) .EQ. 1 .AND. isPrey .EQ. 0)
+        IF (isPred(jp) .EQ. 1 .AND. isPrey(jp) .NE. 1) THEN 
          egest_POC  = egest_POC  + egestc(jp)*Xe !may need a temperature dependence
 C         egest_PON  = egest_PON  + egestn(jp)*Xe*Qn(jp)
 C         egest_POP  = egest_POP  + egestp(jp)*Xe*Qp(jp)

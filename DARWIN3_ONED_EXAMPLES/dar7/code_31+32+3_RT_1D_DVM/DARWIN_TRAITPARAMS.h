@@ -370,6 +370,13 @@ C
      &    b_grazemax,
      &    a_kgrazesat,
      &    b_kgrazesat,
+     &    a_grazemaxHP,
+     &    b_grazemaxHP,
+     &    a_kgrazesatHP,
+     &    b_kgrazesatHP,
+     &    a_kgrazeirr,
+     &    b_kgrazeirr,
+     &    a_alphaV,
      &    a_biosink,
      &    a_biosink_denom,
      &    b_biosink,
@@ -515,6 +522,13 @@ C
       _RL b_grazemax(nGroup)
       _RL a_kgrazesat(nGroup)
       _RL b_kgrazesat(nGroup)
+      _RL a_grazemaxHP(nGroup)
+      _RL b_grazemaxHP(nGroup)
+      _RL a_kgrazesatHP(nGroup)
+      _RL b_kgrazesatHP(nGroup)
+      _RL a_kgrazeirr(nGroup)
+      _RL b_kgrazeirr(nGroup)
+      _RL a_alphaV(nGroup)
       _RL a_biosink(nGroup)
       _RL a_biosink_denom(nGroup)
       _RL b_biosink(nGroup)

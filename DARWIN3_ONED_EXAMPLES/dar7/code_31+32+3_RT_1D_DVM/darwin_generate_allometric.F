@@ -479,6 +479,12 @@ C       maximum grazing rate
         grazemax(jz) = a_grazemax(gz) * biovol(jz)**b_grazemax(gz)
 C       grazing half-saturation
         kgrazesat(jz) = a_kgrazesat(gz) * biovol(jz)**b_kgrazesat(gz)
+C       Higher order predator rates
+        grazemaxHP(jz) = a_grazemaxHP(gz) * 
+     &       biovol(jz)**b_grazemaxHP(gz)
+        kgrazesatHP(jz) = a_kgrazesatHP(gz) *
+     &       biovol(jz)**b_kgrazesatHP(gz)
+        alphaV(jz) = a_alphaV(gz)
         DO jp=1,nplank
           g = group(jp)
           IF (grp_pred(gz).GT.0 .AND. grp_prey(g).GT.0) THEN

@@ -113,6 +113,10 @@
      &    chl2cmax,
      &    grazemax,
      &    kgrazesat,
+     &    grazemaxHP,
+     &    kgrazesatHP,
+     &    kgrazeirr,
+     &    alphaV,
      &    palat,
      &    asseff,
      &    ExportFracPreyPred,
@@ -456,6 +460,10 @@ CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
        IF (isPred(jp) .EQ. 0) THEN
         grazemax(jp) = DARWIN_UNUSED
         kgrazesat(jp) = DARWIN_UNUSED
+        grazemaxHP(jp) = DARWIN_UNUSED
+        kgrazesatHP(jp) = DARWIN_UNUSED
+        kgrazeirr(jp) = DARWIN_UNUSED
+        alphaV(jp) = DARWIN_UNUSED
        ENDIF
        DO jp2=1,nplank
         IF (isPred(jp).EQ.0 .OR. isPrey(jp2).EQ.0) THEN

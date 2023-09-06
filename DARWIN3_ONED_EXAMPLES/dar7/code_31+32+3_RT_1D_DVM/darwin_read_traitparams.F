@@ -190,6 +190,13 @@
      &    b_grazemax,
      &    a_kgrazesat,
      &    b_kgrazesat,
+     &    a_grazemaxHP,
+     &    b_grazemaxHP,
+     &    a_kgrazesatHP,
+     &    b_kgrazesatHP,
+     &    a_kgrazeirr,
+     &    b_kgrazeirr,
+     &    a_alphaV,
      &    a_biosink,
      &    a_biosink_denom,
      &    b_biosink,
@@ -479,7 +486,14 @@ C     used to be 120D-20 for phyto
       b_grazemax = -0.16 _d 0
 C     used to be 22.4
       a_kgrazesat = 1.00 _d 0
-      b_kgrazesat = 0.00 _d 0
+      b_kgrazesat = 0.00 _d 0      
+      a_grazemaxHP = 21.9 _d 0 / pday !extension of other pred
+      b_grazemaxHP = -0.16 _d 0 ! extension of other predators
+      a_kgrazesatHP = 1.0 _d 0 / val_R_NC_zoo !Bianchi et al 2013
+      b_kgrazesatHP = 0.0 _d 0
+      a_ kgrazeirr = 0.8 _d 0 !Sornes and Aksnes in Bianchi etal 2013
+      b_kgrazeirr = 0.0 _d 0
+      a_ alphaV = 0.9 _d 0 !Bianchi et al. 2013
       a_biosink = 0.28 _d -1 / pday
       a_biosink_denom = 1. _d 0
       b_biosink = 0.39 _d 0

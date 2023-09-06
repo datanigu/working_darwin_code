@@ -146,6 +146,10 @@ C
 C- Grazing
 C     grazemax           :: [s^-1]          maximum grazing rate
 C     kgrazesat          :: [mmol C m^-3]   grazing half-saturation concentration
+C     grazemaxHP         :: [s^-1]          maximum grazing rate for all higher predator
+C     kgrazesatHP        :: [mmol C m^-3]   grazing half-sat conc for all higher predator
+C     kgrazeirr          :: [uE m^-2 s^-1]  grazing half-sat for light response of visual higher predators
+C     alphaV             :: []              max fraction of predation from visual light-responsive higher predators
 C     palat              :: []              palatability matrix
 C     asseff             :: []              assimilation efficiency matrix
 C     ExportFracPreyPred :: []              fraction of unassimilated prey becoming particulate organic matter
@@ -245,6 +249,10 @@ C     light_pref       :: [µEin/m2/s]     preferred isolume for determining DVM
      &    chl2cmax,
      &    grazemax,
      &    kgrazesat,
+     &    grazemaxHP,
+     &    kgrazesatHP,
+     &    kgrazeirr,
+     &    alphaV,
      &    palat,
      &    asseff,
      &    ExportFracPreyPred,
@@ -334,6 +342,10 @@ C     light_pref       :: [µEin/m2/s]     preferred isolume for determining DVM
       _RL chl2cmax(nplank)
       _RL grazemax(nplank)
       _RL kgrazesat(nplank)
+      _RL grazemaxHP(nplank)
+      _RL kgrazesatHP(nplank)
+      _RL kgrazeirr(nplank)
+      _RL alphaV(nplank)
       _RL palat(nplank,nplank)
       _RL asseff(nplank,nplank)
       _RL ExportFracPreyPred(nplank,nplank)
