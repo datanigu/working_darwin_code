@@ -75,6 +75,7 @@
      &    R_PICPOC,
      &    biosink,
      &    bioswim,
+     &    bioswimzoo,
      &    respRate,
      &    PCmax,
      &    Qnmax,

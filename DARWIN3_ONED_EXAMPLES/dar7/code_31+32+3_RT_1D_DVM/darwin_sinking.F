@@ -102,11 +102,17 @@ C-    Account for change in level thickness
            flux = bioswim(l)*MAX(0.0, Ptr(i,j,k+1,bi,bj,ic+l-1))
            gTr(i,j,k  ,ic+l-1 )=gTr(i,j,k  ,ic+l-1 ) + flux*upfc
            gTr(i,j,k+1,ic+l-1 )=gTr(i,j,k+1,ic+l-1 ) - flux*dnfc
+           flux = bioswimzoo(l)*MAX(0.0, Ptr(i,j,k+1,bi,bj,ic+l-1))
+           gTr(i,j,k  ,ic+l-1 )=gTr(i,j,k  ,ic+l-1 ) + flux*upfc
+           gTr(i,j,k+1,ic+l-1 )=gTr(i,j,k+1,ic+l-1 ) - flux*dnfc
 #ifdef DARWIN_ALLOW_NQUOTA
            flux = biosink(l)*MAX(0.0, Ptr(i,j,k,bi,bj,in+l-1))
            gTr(i,j,k  ,in+l-1 )=gTr(i,j,k  ,in+l-1 ) - flux*upfc
            gTr(i,j,k+1,in+l-1 )=gTr(i,j,k+1,in+l-1 ) + flux*dnfc
            flux = bioswim(l)*MAX(0.0, Ptr(i,j,k+1,bi,bj,in+l-1))
+           gTr(i,j,k  ,in+l-1 )=gTr(i,j,k  ,in+l-1 ) + flux*upfc
+           gTr(i,j,k+1,in+l-1 )=gTr(i,j,k+1,in+l-1 ) - flux*dnfc
+           flux = bioswimzoo(l)*MAX(0.0, Ptr(i,j,k+1,bi,bj,in+l-1))
            gTr(i,j,k  ,in+l-1 )=gTr(i,j,k  ,in+l-1 ) + flux*upfc
            gTr(i,j,k+1,in+l-1 )=gTr(i,j,k+1,in+l-1 ) - flux*dnfc
 #endif
@@ -117,6 +123,10 @@ C-    Account for change in level thickness
            flux = bioswim(l)*MAX(0.0, Ptr(i,j,k+1,bi,bj,ip+l-1))
            gTr(i,j,k  ,ip+l-1 )=gTr(i,j,k  ,ip+l-1 ) + flux*upfc
            gTr(i,j,k+1,ip+l-1 )=gTr(i,j,k+1,ip+l-1 ) - flux*dnfc
+           flux = bioswimzoo(l)*MAX(0.0, Ptr(i,j,k+1,bi,bj,ip+l-1))
+           gTr(i,j,k  ,ip+l-1 )=gTr(i,j,k  ,ip+l-1 ) + flux*upfc
+           gTr(i,j,k+1,ip+l-1 )=gTr(i,j,k+1,ip+l-1 ) - flux*dnfc
+          flux 
 #endif
 #ifdef DARWIN_ALLOW_SIQUOTA
            flux = biosink(l)*MAX(0.0, Ptr(i,j,k,bi,bj,isi+l-1))
@@ -125,6 +135,10 @@ C-    Account for change in level thickness
            flux = bioswim(l)*MAX(0.0, Ptr(i,j,k+1,bi,bj,isi+l-1))
            gTr(i,j,k  ,isi+l-1)=gTr(i,j,k  ,isi+l-1) + flux*upfc
            gTr(i,j,k+1,isi+l-1)=gTr(i,j,k+1,isi+l-1) - flux*dnfc
+           flux = bioswimzoo(l)*MAX(0.0, Ptr(i,j,k+1,bi,bj,isi+l-1))
+           gTr(i,j,k  ,isi+l-1)=gTr(i,j,k  ,isi+l-1) + flux*upfc
+           gTr(i,j,k+1,isi+l-1)=gTr(i,j,k+1,isi+l-1) - flux*dnfc
+
 #endif
 #ifdef DARWIN_ALLOW_FEQUOTA
            flux = biosink(l)*MAX(0.0, Ptr(i,j,k,bi,bj,ife+l-1))
@@ -133,6 +147,10 @@ C-    Account for change in level thickness
            flux = bioswim(l)*MAX(0.0, Ptr(i,j,k+1,bi,bj,ife+l-1))
            gTr(i,j,k  ,ife+l-1)=gTr(i,j,k  ,ife+l-1) + flux*upfc
            gTr(i,j,k+1,ife+l-1)=gTr(i,j,k+1,ife+l-1) - flux*dnfc
+           flux = bioswimzoo(l)*MAX(0.0, Ptr(i,j,k+1,bi,bj,ife+l-1))
+           gTr(i,j,k  ,ife+l-1)=gTr(i,j,k  ,ife+l-1) + flux*upfc
+           gTr(i,j,k+1,ife+l-1)=gTr(i,j,k+1,ife+l-1) - flux*dnfc
+
 #endif
           ENDDO
 #ifdef DARWIN_ALLOW_CHLQUOTA
@@ -141,6 +159,9 @@ C-    Account for change in level thickness
            gTr(i,j,k  ,iChl+l-1)=gTr(i,j,k  ,iChl+l-1)-flux*upfc
            gTr(i,j,k+1,iChl+l-1)=gTr(i,j,k+1,iChl+l-1)+flux*dnfc
            flux = bioswim(l)*MAX(0.0, Ptr(i,j,k+1,bi,bj,iChl+l-1))
+           gTr(i,j,k  ,iChl+l-1)=gTr(i,j,k  ,iChl+l-1)+flux*upfc
+           gTr(i,j,k+1,iChl+l-1)=gTr(i,j,k+1,iChl+l-1)-flux*dnfc
+           flux = bioswimzoo(l)*MAX(0.0, Ptr(i,j,k+1,bi,bj,iChl+l-1))
            gTr(i,j,k  ,iChl+l-1)=gTr(i,j,k  ,iChl+l-1)+flux*upfc
            gTr(i,j,k+1,iChl+l-1)=gTr(i,j,k+1,iChl+l-1)-flux*dnfc
           ENDDO

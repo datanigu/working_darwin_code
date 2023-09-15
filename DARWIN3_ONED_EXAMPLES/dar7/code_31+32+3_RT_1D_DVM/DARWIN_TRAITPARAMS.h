@@ -383,6 +383,8 @@ C
      &    a_bioswim,
      &    a_bioswim_denom,
      &    b_bioswim,
+     &    a_bioswimzoo,
+     &    b_bioswimzoo,
      &    a_ppSig,
      &    a_ppOpt,
      &    b_ppOpt,
@@ -535,6 +537,8 @@ C
       _RL a_bioswim(nGroup)
       _RL a_bioswim_denom(nGroup)
       _RL b_bioswim(nGroup)
+      _RL a_bioswimzoo(nGroup)
+      _RL b_bioswimzoo(nGroup)
       _RL a_ppSig(nGroup)
       _RL a_ppOpt(nGroup)
       _RL b_ppOpt(nGroup)

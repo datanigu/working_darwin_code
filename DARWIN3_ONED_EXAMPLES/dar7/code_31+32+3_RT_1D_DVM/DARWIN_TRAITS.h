@@ -99,6 +99,7 @@ C     R_PICPOC           :: [mmol PIC (mmol POC)^-1]   inorganic-organic carbon 
 C
 C     biosink            :: [m s^-1]                   sinking velocity (positive downwards)
 C     bioswim            :: [m s^-1]                   upward swimming velocity (positive upwards)
+C     bioswimzoo         :: [m s^-1]                   upward swimming velocity for diel vertically migrating zoopl (pos. upwards)
 C
 C     respRate           :: [s^-1]                     respiration rate
 C     PCmax              :: [s^-1]                     maximum carbon-specific growth rate
@@ -211,6 +212,7 @@ C     light_pref       :: [µEin/m2/s]     preferred isolume for determining DVM
      &    R_PICPOC,
      &    biosink,
      &    bioswim,
+     &    bioswimzoo,
      &    respRate,
      &    PCmax,
      &    Qnmax,
@@ -304,6 +306,7 @@ C     light_pref       :: [µEin/m2/s]     preferred isolume for determining DVM
       _RL R_PICPOC(nplank)
       _RL biosink(nplank)
       _RL bioswim(nplank)
+      _RL bioswimzoo(nplank)
       _RL respRate(nplank)
       _RL PCmax(nplank)
       _RL Qnmax(nplank)
