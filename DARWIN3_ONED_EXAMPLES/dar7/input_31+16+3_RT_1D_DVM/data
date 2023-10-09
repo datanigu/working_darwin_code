@@ -58,8 +58,9 @@ cg2dTargetResidual=1.E-7,
 # ************************
 &PARM03
  nIter0=0,
- nTimeSteps=259200,
+# nTimeSteps=259200,
 #nTimeSteps=4,
+ nTimeSteps=25920,
  deltaTmom= 3600.,
  deltaTtracer= 3600.,
  deltaTClock = 3600.,
