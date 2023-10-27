@@ -601,7 +601,7 @@ C     a_egestc = 8.0 _d 0 /pday ![Biachi et al 2013]
       b_egestfe = 0.00 _d 0
       a_egestsi = 0.00 _d 0
       b_egestsi = 0.00 _d 0
-      a_light_pref = 0.0046 ![~10^-3 W/m2, Bianchi et al. 2013]
+      a_light_pref = 0.0046 _d 0![~10^-3 W/m2, Bianchiet al.2013]
       b_light_pref = 0.00 _d 0
 
 
