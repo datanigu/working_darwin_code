@@ -315,6 +315,9 @@ C      _RL egest_POFe
 C      _RL egest_POSi
 
 
+
+
+
       _RL DARWIN_EPS
       PARAMETER(DARWIN_EPS=1 _d -38)
 
@@ -1655,18 +1658,26 @@ C#ifdef DARWIN_ALLOW_SIQUOTA
 C         gTr(isi+jp-1) = gTr(isi+jp-1) - egestsi(jp)*Xe*Qsi(jp)
 C#endif
 
-C========Swimming ==============
+C======== Swimming ==============
 C Added in by D.T.
-C If upward gradient pos and PARtot LT light_pref, swim up as usu.
-C If upward gradient neg or 0 and PARtot LT light_pref, no swim
-C If PARtot GT light_pref, no matter gradient, swim down 
+C If upward gradient in light neg, for whatever reason, 
+C         or gradient is 0, no swim
+C If upward gradient pos and PARtot LT light_pref, swim up 
+C If upward gradient pos and PARtot equal light_pref, no swim
+C If upward gradient pos and PARtot GT light_pref, swim down 
 
-C        IF (gPARF .GT. 0 .AND. PARtot .LT. ligth_pref) THEN
-C                bioswim = bioswim ! this is just a placeholder, D.T.  
-C        IF (gPARF .LE. 0 .AND. PARtot .LT. light_pref) THEN
-C                bioswim = 0
-C        IF (PARtot .GT. light_pref) THEN
-C                bioswim = -bioswim
+        IF (gPARF .LE. 0) THEN
+          bioswimzoo(jp) = 0.0 
+        ELSE
+          IF (PARtot .LT. light_pref(jp)) THEN
+                bioswimzoo(jp) = bioswimzoo(jp)  
+          ELSEIF (PARtot .EQ. light_pref(jp)) THEN
+                bioswimzoo(jp) = 0.0 
+          ELSEIF (PARtot .GT. light_pref(jp)) THEN
+                bioswimzoo(jp) = -bioswimzoo(jp)
+          ENDIF
+        ENDIF
+
 
         ENDIF !End predator designation for egestion and swimming
 
