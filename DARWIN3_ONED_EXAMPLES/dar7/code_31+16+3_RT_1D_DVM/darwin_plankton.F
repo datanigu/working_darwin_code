@@ -8,6 +8,7 @@ C !INTERFACE: ==========================================================
      U     gTr,
      O     chlout, diags,
      I     PAR, gPARF,
+     I     surfPAR,
      I     photoTempFunc, hetTempFunc, grazTempFunc, reminTempFunc,
      I     mortTempFunc, mort2TempFunc, uptakeTempFunc,
      I     k_debug,myTime,myIter,myThid)
@@ -36,6 +37,7 @@ C  myThid :: thread number
       _RL Ptr(nDarwin)
       _RL PAR(nlam)
       _RL gPARF
+      _RL surfPAR
       _RL photoTempFunc(nplank)
       _RL hetTempFunc(nplank)
       _RL reminTempFunc
