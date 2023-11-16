@@ -132,6 +132,8 @@
   fields(6, 6) = 'PAR     ',
   fields(7, 6) = 'Chl     ',
   fields(8, 6) = 'plankC  ',
+  fields(9, 6) = 'gPARF   ',
+  fields(10,6) = 'PARF    ',
 
   filename( 7) = 'General_2',
   frequency(7) = 2592000.,
