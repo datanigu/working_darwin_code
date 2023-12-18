@@ -6,6 +6,7 @@ C !INTERFACE: ==========================================================
       SUBROUTINE DARWIN_LIGHT_RADTRANS(
      O                         PAR,
      O                         gPARF,
+     O                         topPAR,
      I                         solTime,
      I                         bi, bj, iMin, iMax, jMin, jMax,
      I                         myTime, myIter, myThid )
@@ -44,6 +45,7 @@ C  myThid :: thread number
 C !OUTPUT PARAMETERS: ==================================================
       _RL PAR(1-OLx:sNx+OLx, 1-OLy:sNy+OLy, Nr, nlam)
       _RL gPARF(1-OLx:sNx+OLx, 1-OLy:sNy+OLy, Nr-1, nlam)
+      _RL topPAR(1-OLx:sNx+OLx, 1-OLy:sNy+OLy, nlam)
 CEOP
 
 #ifdef ALLOW_DARWIN
@@ -198,7 +200,6 @@ C ======================================================================
         ENDDO
        ENDDO
       ENDDO
-
 C ======================================================================
 
 #ifdef ALLOW_DIAGNOSTICS
@@ -210,6 +211,9 @@ C ======================================================================
        WRITE(diagname, '(A,I3.3)') 'gPARF', l
        CALL DIAGNOSTICS_FILL(gPARF(1-OLx,1-OLy,1,l),diagname,0,Nr-1,2,
      &       bi,bj,myThid)
+C       WRITE(diagname, '(A,I3.3)') 'topPAR', l
+C       CALL DIAGNOSTICS_FILL(topPAR(1-OLx,1-OLy,l),diagname,0,1,2,
+C     &       bi,bj,myThid)     
 #ifdef DARWIN_DIAG_IOP
        WRITE(diagname, '(A,I3.3)') 'a', l
        CALL DIAGNOSTICS_FILL(a3d(1-OLx,1-OLy,1,l),diagname,0,Nr,2,
@@ -256,7 +260,7 @@ C ======================================================================
         WRITE(diagname, '(A)') 'PARF'
         CALL DIAGNOSTICS_FILL(PARF,diagname,0,Nr,2,bi,bj,myThid)
        ENDIF
-       IF (DIAGNOSTICS_IS_ON('gPARF    ', myThid)) THEN
+       IF (DIAGNOSTICS_IS_ON('gPARF   ', myThid)) THEN
 C        DO l=2,nlam
          DO k=1,Nr-1
           DO j=jMin,jMax
@@ -268,6 +272,17 @@ C        DO l=2,nlam
 C        ENDDO
         WRITE(diagname, '(A)') 'gPARF'
         CALL DIAGNOSTICS_FILL(gPARF,diagname,0,Nr-1,2,bi,bj,myThid)
+       ENDIF
+       IF (DIAGNOSTICS_IS_ON('topPAR  ', myThid)) THEN
+        DO l=1,nlam
+          DO j=jMin,jMax
+           DO i= iMin,iMax
+            topPAR(i,j,l) = PARF(i,j,1,l) 
+           ENDDO
+          ENDDO
+        ENDDO
+        WRITE(diagname, '(A)') 'topPAR'
+        CALL DIAGNOSTICS_FILL(topPAR,diagname,0,1,2,bi,bj,myThid)
        ENDIF
 C PAR is done in darwin_forcing
       ENDIF

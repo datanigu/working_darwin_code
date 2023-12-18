@@ -53,6 +53,7 @@ C!LOCAL VARIABLES: ====================================================
       INTEGER i,j,k,l,jp
       _RL PAR(1-OLx:sNx+OLx, 1-OLy:sNy+OLy, Nr, nlam)
       _RL gPARF(1-OLx:sNx+OLx, 1-OLy:sNy+OLy, Nr-1, nlam)
+      _RL topPAR(1-OLx:sNx+OLx, 1-OLy:sNy+OLy, nlam)
       _RL alpha_I, chltmp
       _RL lite, atten
 
@@ -115,8 +116,8 @@ C      do not fill diagnostics,
 C      do not take ice into account for backwards compatibility
 # ifdef ALLOW_RADTRANS
        j = -1
-       CALL DARWIN_LIGHT_RADTRANS(PAR,gPARF,myTime,bi,bj,1-OLx,sNx+OLx,
-     &                         1-OLy,sNy+OLy,myTime,j,myThid)
+       CALL DARWIN_LIGHT_RADTRANS(PAR,gPARF,topPAR,myTime,bi,bj,
+     &          1-OLx,sNx+OLx,1-OLy,sNy+OLy,myTime,j,myThid)
 # else
        j = -99
        CALL DARWIN_LIGHT(PAR,myTime,bi,bj,1-OLx,sNx+OLx,1-OLy,sNy+OLy,

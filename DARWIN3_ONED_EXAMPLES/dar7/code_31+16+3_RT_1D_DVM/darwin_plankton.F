@@ -7,7 +7,7 @@ C !INTERFACE: ==========================================================
      I     Ptr,
      U     gTr,
      O     chlout, diags,
-     I     PAR, gPARF,
+     I     PAR, gPARF,topPAR,
      I     surfPAR,
      I     photoTempFunc, hetTempFunc, grazTempFunc, reminTempFunc,
      I     mortTempFunc, mort2TempFunc, uptakeTempFunc,
@@ -31,12 +31,15 @@ C !INPUT PARAMETERS: ===================================================
 C  Ptr    :: darwin model tracers
 C  PAR    :: PAR in uEin/s/m2
 C         :: either non-spectral (tlam=1) or waveband total
+C  gPARF  :: gradient in PAR in uEin/s/m2
+C  topPAR :: PAR at top of water column
 C  myTime :: current time
 C  myIter :: current iteration number
 C  myThid :: thread number
       _RL Ptr(nDarwin)
       _RL PAR(nlam)
       _RL gPARF
+      _RL topPAR
       _RL surfPAR
       _RL photoTempFunc(nplank)
       _RL hetTempFunc(nplank)
@@ -1340,7 +1343,11 @@ C     &     ((kgrazesatHP(jz)+sumprey)*kgrazeirr(jz))+PARtot))
 #else
           grazphy = tmp*palat(jp,jz)*X(jp)/sumpref
 #endif
-          grazrate(jz) = grazrate(jz) + grazphy*asseff(jp,jz)*regQc
+C I think max grazphy, calculated at this point in code, 
+C based on biomass of phytoplankton to consume, 
+C is where zooplankton should migrate to, D.T.
+
+          grazrate(jz) = grazrate(jz) + grazphy*asseff(jp,jz)*regQc !GrGC diag
           grazphy = grazphy*X(jz)
 
           expFrac = ExportFracPreyPred(jp,jz)

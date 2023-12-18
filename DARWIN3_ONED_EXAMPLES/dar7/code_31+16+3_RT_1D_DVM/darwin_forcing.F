@@ -73,6 +73,7 @@ C  k                    :: vertical level
       _RL gPtr(1-OLx:sNx+OLx, 1-OLy:sNy+OLy, Nr, nDarwin)
       _RL PAR(1-OLx:sNx+OLx, 1-OLy:sNy+OLy, Nr, nlam)
       _RL gPARF(1-OLx:sNx+OLx, 1-OLy:sNy+OLy, Nr-1, nlam)
+      _RL topPAR(1-OLx:sNx+OLx,1-OLy:sNy+OLy, nlam)
       _RL diags(1-OLx:sNx+OLx,1-OLy:sNy+OLy, Nr, darwin_nDiag)
       _RL gDIC(1-OLx:sNx+OLx, 1-OLy:sNy+OLy)
       _RL gALK(1-OLx:sNx+OLx, 1-OLy:sNy+OLy)
@@ -182,8 +183,8 @@ c      ENDIF
 
       CALL TIMER_START('DARWIN_LIGHT [DARWIN_FORCING]',myThid)
 #ifdef ALLOW_RADTRANS
-      CALL DARWIN_LIGHT_RADTRANS(PAR,gPARF,subTime,bi,bj,iMin,iMax,jMin,
-     &                        jMax,subTime,myIter,myThid)
+      CALL DARWIN_LIGHT_RADTRANS(PAR,gPARF,topPAR,subTime,bi,bj,iMin,
+     &                        iMax,jMin,jMax,subTime,myIter,myThid)
 #else
       CALL DARWIN_LIGHT(PAR, midTime, bi, bj, iMin, iMax, jMin, jMax,
      &               subTime, myIter, myThid)
@@ -594,7 +595,7 @@ C-      default (face fit into global-IO-array)
      I                 ptr,
      U                 gtr,
      O                 chlout, diagsl,
-     I                 PARl, gPARF, photoTempFunc,
+     I                 PARl, gPARF, topPAR,photoTempFunc,
      I                 hetTempFunc,
      I                 grazTempFunc,
      I                 reminTempFunc,
