@@ -1346,6 +1346,11 @@ C     &     ((kgrazesatHP(jz)+sumprey)*kgrazeirr(jz))+PARtot))
 C I think max grazphy, calculated at this point in code, 
 C based on biomass of phytoplankton to consume, 
 C is where zooplankton should migrate to, D.T.
+C Although, if take into account assimilation and regQc
+C (the prey's carbon quota?), can use GrGC diagnostic,
+C which may be okay if zooplankton swim toward food 
+C for which they have a higher assimilation efficiency
+C and carbon quota
 
           grazrate(jz) = grazrate(jz) + grazphy*asseff(jp,jz)*regQc !GrGC diag
           grazphy = grazphy*X(jz)
@@ -1669,22 +1674,34 @@ C#endif
 
 C======== Swimming ==============
 C Added in by D.T.
-C If upward gradient in light neg, for whatever reason, 
-C         or gradient is 0, no swim
-C If upward gradient pos and PARtot LT light_pref, swim up 
-C If upward gradient pos and PARtot equal light_pref, no swim
-C If upward gradient pos and PARtot GT light_pref, swim down 
+C Day
+C If PAR at top (topPAR) >0 (or above some level in future), 
+C and PARtot > light_pref, swim down (toward light_pref)
+C If topPAR >0 and PARtot < light_pref, swim up 
+C If topPAR >0 and PARtot = light_pref, no swim
 
-        IF (gPARF .LE. 0) THEN
-          bioswimzoo(jp) = 0.0 
-        ELSE
-          IF (PARtot .LT. light_pref(jp)) THEN
-                bioswimzoo(jp) = bioswimzoo(jp)  
+C Night
+C If topPAR 0 (or below some light level in future),
+C and grazphy < food max, swim toward food max
+C If topPAR 0 (or below some light level in future),
+C and grazphy = food max, don't swim; stay put
+
+        IF (topPAR .GT. 0) THEN !Day
+          IF (PARtot .GT. light_pref(jp)) THEN
+                bioswimzoo(jp) = -bioswimzoo(jp) 
+          ELSEIF (PARtot. LT. light_pref(jp)) THEN
+                bioswimzoo(jp) = bioswimzoo(jp)
           ELSEIF (PARtot .EQ. light_pref(jp)) THEN
-                bioswimzoo(jp) = 0.0 
-          ELSEIF (PARtot .GT. light_pref(jp)) THEN
-                bioswimzoo(jp) = -bioswimzoo(jp)
+                bioswimzoo(jp) = 0.0
           ENDIF
+C        ELSE !Night
+C          IF (PARtot .LT. light_pref(jp)) THEN
+C                bioswimzoo(jp) = bioswimzoo(jp)  
+C          ELSEIF (PARtot .EQ. light_pref(jp)) THEN
+C                bioswimzoo(jp) = 0.0 
+C          ELSEIF (PARtot .GT. light_pref(jp)) THEN
+C                bioswimzoo(jp) = -bioswimzoo(jp)
+C          ENDIF
         ENDIF
 
 
