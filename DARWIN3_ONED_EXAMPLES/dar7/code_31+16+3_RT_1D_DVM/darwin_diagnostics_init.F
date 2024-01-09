@@ -482,6 +482,14 @@ C-      use units & names from data.ptracers :
         diagCode  = 'SMRP    MR      '
         CALL DIAGNOSTICS_ADDTOLIST( diagNum,
      I             diagName, diagCode, diagUnits, diagTitle, 0, myThid )
+
+        WRITE(diagName,'(A,I4.4)')'SwDr',j
+        WRITE(diagTitle,'(A,I4)')'Swim direction toward max GrGn',j
+        diagUnits = 'unitless        '
+        diagCode  = 'SMRP    MR      '
+        CALL DIAGNOSTICS_ADDTOLIST( diagNum,
+     I             diagName, diagCode, diagUnits, diagTitle, 0, myThid )
+
       ENDDO
 #endif
 

@@ -102,6 +102,9 @@ C  k                    :: vertical level
       _RL ptr(nDarwin), gtr(nDarwin), PARl(nlam)
       _RL chlout(nPhoto)
       _RL diagsl(darwin_nDiag)
+      _RL predgrazc(1-OLx:sNx+OLx, 1-OLy:sNy+OLy, Nr,nplank)
+      _RL maxgrgain(1-OLx:sNx+OLx,1-OLy:sNy+OLy,nplank)
+      _RL SwDr(1-OLx:sNx+OLx,1-OLy:sNy+OLy,Nr,nplank)
       _RL photoTempFunc(nplank)
       _RL hetTempFunc(nplank)
       _RL grazTempFunc(nplank)
@@ -563,6 +566,40 @@ C-      default (face fit into global-IO-array)
 #endif /* ALLOW_EXCH2 */
 #endif /* DARWIN_DEBUG */
 
+C Finding swim direction to go to max grazer gain, D.T.
+      SwDr = 0 _d 0
+      maxgrgain = 0 _d 0
+      
+      DO i=iMin,iMax
+      DO j=jMin,jMax
+      DO iTr=1,nplank 
+      DO k=1,Nr !goes from surface to depth
+          IF (predgrazc(i,j,k,iTr) .GT. maxgrgain(i,j,iTr)) THEN
+              SwDr(i,j,k,iTr) = 1
+              maxgrgain(i,j,iTr) = predgrazc(i,j,k,iTr)                    
+          ELSEIF (predgrazc(i,j,k,iTr) .EQ. 
+     &         maxgrgain(i,j,iTr) .OR. k .EQ. 1) THEN
+              SwDr(i,j,k,iTr) = 0
+          ELSEIF (predgrazc(i,j,k,iTr) .LT. maxgrgain(i,j,iTr)) THEN
+              SwDr(i,j,k,iTr) = -1
+        ENDIF
+      ENDDO
+      ENDDO
+      ENDDO
+      ENDDO
+
+        print*,'predgrazc(1,1,1,1)',predgrazc(1,1,1,1)
+        print*,'predgrazc(1,1,1,2)',predgrazc(1,1,1,2)
+        print*,'size_predgrazc',SIZE(predgrazc)
+        print*,'iMax_index',iMax
+        print*,'jMax_index',jMax
+        print*,'Nr_index',Nr
+        print*,'nplank_index',nplank
+        print*,'size_maxgrgain',size(maxgrgain)
+        print*,'SwDr_in_darwin_forcing',SwDr
+        print*,'size_SwDr',SIZE(SwDr)
+    
+
       do k=1,Nr
       do j=jMin,jMax
 #ifdef DARWIN_DEBUG
@@ -594,8 +631,11 @@ C-      default (face fit into global-IO-array)
         CALL DARWIN_PLANKTON(
      I                 ptr,
      U                 gtr,
-     O                 chlout, diagsl,
-     I                 PARl, gPARF, topPAR,photoTempFunc,
+     O                 chlout, diagsl,predgrazc,
+     I                 PARl, gPARF, topPAR,
+     I                 surfPAR,
+     I                 SwDr,
+     I                 photoTempFunc,
      I                 hetTempFunc,
      I                 grazTempFunc,
      I                 reminTempFunc,
@@ -869,6 +909,9 @@ C      diags(iCons*) for convenience
      &        diagname,0,Nr,2,bi,bj,myThid)
         WRITE(diagname, '(A,I4.4)') 'GrGC', iTr
         CALL DIAGNOSTICS_FILL(diags(1-OLx,1-OLy,1,iGrGC+iTr-1),
+     &        diagname,0,Nr,2,bi,bj,myThid)
+        WRITE(diagname, '(A,I4.4)') 'SwDr', iTr
+        CALL DIAGNOSTICS_FILL(diags(1-OLx,1-OLy,1,iSwDr+iTr-1),
      &        diagname,0,Nr,2,bi,bj,myThid)
        ENDDO
 #endif

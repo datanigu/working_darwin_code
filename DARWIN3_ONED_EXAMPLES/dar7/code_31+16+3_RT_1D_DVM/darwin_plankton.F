@@ -6,9 +6,10 @@ C !INTERFACE: ==========================================================
       SUBROUTINE DARWIN_PLANKTON(
      I     Ptr,
      U     gTr,
-     O     chlout, diags,
+     O     chlout, diags,predgrazc,
      I     PAR, gPARF,topPAR,
      I     surfPAR,
+     I     SwDr,
      I     photoTempFunc, hetTempFunc, grazTempFunc, reminTempFunc,
      I     mortTempFunc, mort2TempFunc, uptakeTempFunc,
      I     k_debug,myTime,myIter,myThid)
@@ -33,6 +34,7 @@ C  PAR    :: PAR in uEin/s/m2
 C         :: either non-spectral (tlam=1) or waveband total
 C  gPARF  :: gradient in PAR in uEin/s/m2
 C  topPAR :: PAR at top of water column
+C  SwDr   :: Swim direction for DVM
 C  myTime :: current time
 C  myIter :: current iteration number
 C  myThid :: thread number
@@ -41,6 +43,7 @@ C  myThid :: thread number
       _RL gPARF
       _RL topPAR
       _RL surfPAR
+      _RL SwDr
       _RL photoTempFunc(nplank)
       _RL hetTempFunc(nplank)
       _RL reminTempFunc
@@ -1343,14 +1346,17 @@ C     &     ((kgrazesatHP(jz)+sumprey)*kgrazeirr(jz))+PARtot))
 #else
           grazphy = tmp*palat(jp,jz)*X(jp)/sumpref
 #endif
+
 C I think max grazphy, calculated at this point in code, 
 C based on biomass of phytoplankton to consume, 
 C is where zooplankton should migrate to, D.T.
 C Although, if take into account assimilation and regQc
-C (the prey's carbon quota?), can use GrGC diagnostic,
+C (the prey's carbon quota?), can use GrGn diagnostic,
+C the amount of carbon biomass per vol. gained per second, 
 C which may be okay if zooplankton swim toward food 
 C for which they have a higher assimilation efficiency
 C and carbon quota
+
 
           grazrate(jz) = grazrate(jz) + grazphy*asseff(jp,jz)*regQc !GrGC diag
           grazphy = grazphy*X(jz)
@@ -1519,6 +1525,7 @@ C==== Apply grazing tendencies =========================================
       DO jz = 1, nplank
         diags(iGrGn+jz-1) = predgrazc(jz)
         diags(iGrGC+jz-1) = grazrate(jz)
+        diags(iSwDr+jz-1) = SwDr(jz)
       ENDDO
 #endif
 
