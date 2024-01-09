@@ -1525,7 +1525,7 @@ C==== Apply grazing tendencies =========================================
       DO jz = 1, nplank
         diags(iGrGn+jz-1) = predgrazc(jz)
         diags(iGrGC+jz-1) = grazrate(jz)
-        diags(iSwDr+jz-1) = SwDr(jz)
+C        diags(iSwDr+jz-1) = SwDr(jz)
       ENDDO
 #endif
 
