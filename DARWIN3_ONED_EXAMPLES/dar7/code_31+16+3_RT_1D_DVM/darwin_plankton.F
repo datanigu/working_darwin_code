@@ -43,7 +43,7 @@ C  myThid :: thread number
       _RL gPARF
       _RL topPAR
       _RL surfPAR
-      _RL SwDr
+      _RL SwDr(nplank)
       _RL photoTempFunc(nplank)
       _RL hetTempFunc(nplank)
       _RL reminTempFunc
@@ -1525,9 +1525,12 @@ C==== Apply grazing tendencies =========================================
       DO jz = 1, nplank
         diags(iGrGn+jz-1) = predgrazc(jz)
         diags(iGrGC+jz-1) = grazrate(jz)
-C        diags(iSwDr+jz-1) = SwDr(jz)
+        diags(iSwDr+jz-1) = SwDr(jz)
       ENDDO
 #endif
+
+        print*,'Size_diags_in_plankton',size(diags)
+        print*,'Size_SwDr_in_plankton',size(SwDr)
 
 C=======================================================================
 C==== Mortality and parameterized exudation ============================

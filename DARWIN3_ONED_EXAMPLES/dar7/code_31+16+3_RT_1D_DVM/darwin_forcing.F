@@ -588,9 +588,14 @@ C Finding swim direction to go to max grazer gain, D.T.
       ENDDO
       ENDDO
 
-        print*,'SwDr_in_darwin_forcing',SwDr
-        print*,'size_SwDr',SIZE(SwDr)
-    
+        print*,'imin',imin
+        print*,'imax',imax
+        print*,'jmin',jmin
+        print*,'jmax',jmax
+        print*,'nplnak',nplank
+        print*,'Nr',Nr
+        print*,'size_SwDr_in_forcing',SIZE(SwDr)
+        print*,'Size_diagsl_in_forcing',size(diagsl)
 
       do k=1,Nr
       do j=jMin,jMax
@@ -902,9 +907,9 @@ C      diags(iCons*) for convenience
         WRITE(diagname, '(A,I4.4)') 'GrGC', iTr
         CALL DIAGNOSTICS_FILL(diags(1-OLx,1-OLy,1,iGrGC+iTr-1),
      &        diagname,0,Nr,2,bi,bj,myThid)
-C        WRITE(diagname, '(A,I4.4)') 'SwDr', iTr
-C        CALL DIAGNOSTICS_FILL(diags(1-OLx,1-OLy,1,iSwDr+iTr-1),
-C     &        diagname,0,Nr,2,bi,bj,myThid)
+        WRITE(diagname, '(A,I4.4)') 'SwDr', iTr
+        CALL DIAGNOSTICS_FILL(diags(1-OLx,1-OLy,1,iSwDr+iTr-1),
+     &        diagname,0,Nr,2,bi,bj,myThid)
        ENDDO
 #endif
 #ifdef DARWIN_ALLOW_CSTORE
