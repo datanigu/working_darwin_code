@@ -483,12 +483,12 @@ C-      use units & names from data.ptracers :
         CALL DIAGNOSTICS_ADDTOLIST( diagNum,
      I             diagName, diagCode, diagUnits, diagTitle, 0, myThid )
 
-C        WRITE(diagName,'(A,I4.4)')'SwDr',j
-C        WRITE(diagTitle,'(A,I4)')'Swim direction toward max GrGn',j
-C        diagUnits = 'unitless        '
-C        diagCode  = 'SMRP    MR      '
-C        CALL DIAGNOSTICS_ADDTOLIST( diagNum,
-C     I             diagName, diagCode, diagUnits, diagTitle, 0, myThid )
+        WRITE(diagName,'(A,I4.4)')'SwDr',j
+        WRITE(diagTitle,'(A,I4)')'Swim direction toward max GrGn',j
+        diagUnits = 'unitless        '
+        diagCode  = 'SMRP    MR      '
+        CALL DIAGNOSTICS_ADDTOLIST( diagNum,
+     I             diagName, diagCode, diagUnits, diagTitle, 0, myThid )
 
       ENDDO
 #endif
