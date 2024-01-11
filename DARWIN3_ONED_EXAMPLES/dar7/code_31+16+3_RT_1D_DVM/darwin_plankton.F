@@ -1529,9 +1529,6 @@ C==== Apply grazing tendencies =========================================
       ENDDO
 #endif
 
-        print*,'Size_diags_in_plankton',size(diags)
-        print*,'Size_SwDr_in_plankton',size(SwDr)
-
 C=======================================================================
 C==== Mortality and parameterized exudation ============================
       exude_DOC  = 0.0 _d 0
@@ -1702,16 +1699,10 @@ C and grazphy = food max, don't swim; stay put
           ELSEIF (PARtot. LT. light_pref(jp)) THEN
                 bioswimzoo(jp) = bioswimzoo(jp)
           ELSEIF (PARtot .EQ. light_pref(jp)) THEN
-                bioswimzoo(jp) = 0.0
+                bioswimzoo(jp) = 0 _d 0
           ENDIF
-C        ELSE !Night
-C          IF (PARtot .LT. light_pref(jp)) THEN
-C                bioswimzoo(jp) = bioswimzoo(jp)  
-C          ELSEIF (PARtot .EQ. light_pref(jp)) THEN
-C                bioswimzoo(jp) = 0.0 
-C          ELSEIF (PARtot .GT. light_pref(jp)) THEN
-C                bioswimzoo(jp) = -bioswimzoo(jp)
-C          ENDIF
+        ELSE !Night
+             bioswimzoo(jp) = bioswimzoo(jp)*SwDr(jp) 
         ENDIF
 
 

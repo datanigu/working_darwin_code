@@ -104,8 +104,9 @@ C  k                    :: vertical level
       _RL diagsl(darwin_nDiag)
       _RL predgrazc(nplank)
       _RL predgrazc_nd(1-OLx:sNx+OLx, 1-OLy:sNy+OLy, Nr,nplank)
-      _RL maxgrgain(1-OLx:sNx+OLx,1-OLy:sNy+OLy,nplank)
+C      _RL maxgrgain(1-OLx:sNx+OLx,1-OLy:sNy+OLy,nplank)
       _RL, save :: SwDr(1-OLx:sNx+OLx,1-OLy:sNy+OLy,Nr,nplank) = 0 _d 0
+      _RL max_loc(1-OLx:sNx+OLx,1-OLy:sNy+OLy,nplank)
       _RL photoTempFunc(nplank)
       _RL hetTempFunc(nplank)
       _RL grazTempFunc(nplank)
@@ -650,21 +651,40 @@ C-      default (face fit into global-IO-array)
       enddo
 
 C Finding swim direction to go to max grazer gain, D.T.
-      maxgrgain = 0 _d 0
+C      maxgrgain = 0 _d 0
+C      DO i=iMin,iMax
+C      DO j=jMin,jMax
+C      DO iTr=1,nplank 
+C      DO k=1,Nr !goes from surface to depth
+C          IF (predgrazc_nd(i,j,k,iTr) .GT. maxgrgain(i,j,iTr)) THEN
+C              IF (k .NE. 1) THEN
+C                SwDr(i,j,k,iTr) = 1
+C              ENDIF
+C            maxgrgain(i,j,iTr) = predgrazc_nd(i,j,k,iTr)                    
+C          ELSEIF (predgrazc_nd(i,j,k,iTr) .EQ. 
+C     &         maxgrgain(i,j,iTr) .OR. k .EQ. 1) THEN
+C              SwDr(i,j,k,iTr) = 0
+C          ELSEIF (predgrazc_nd(i,j,k,iTr) .LT. maxgrgain(i,j,iTr)) THEN
+C              SwDr(i,j,k,iTr) = -1
+C        ENDIF
+C      ENDDO
+C      ENDDO
+C      ENDDO
+C      ENDDO
+C new code
+      SwDr = 0 _d 0
+      max_loc = MAXLOC(predgrazc_nd, DIM=3)
       DO i=iMin,iMax
       DO j=jMin,jMax
-      DO iTr=1,nplank 
-      DO k=1,Nr !goes from surface to depth
-          IF (predgrazc_nd(i,j,k,iTr) .GT. maxgrgain(i,j,iTr)) THEN
-              SwDr(i,j,k,iTr) = 1
-              maxgrgain(i,j,iTr) = predgrazc_nd(i,j,k,iTr)                    
-          ELSEIF (predgrazc_nd(i,j,k,iTr) .EQ. 
-     &         maxgrgain(i,j,iTr) .OR. k .EQ. 1) THEN
-              SwDr(i,j,k,iTr) = 0
-          ELSEIF (predgrazc_nd(i,j,k,iTr) .LT. maxgrgain(i,j,iTr)) THEN
-              SwDr(i,j,k,iTr) = -1
+      DO iTr=1,nplank
+        IF (max_loc(i,j,iTr) .EQ. 1) THEN
+          SwDr(i, j, max_loc(i,j,iTr)+1: ,iTr) = 1
+        ELSEIF (max_loc(i,j,iTr) .EQ. Nr) THEN
+          SwDr(i, j,1:max_loc(i,j,iTr)-1, iTr) = -1
+        ELSE
+          SwDr(i, j,1:max_loc(i,j,iTr)-1, iTr) = -1
+          SwDr(i, j, max_loc(i,j,iTr)+1: ,iTr) = 1
         ENDIF
-      ENDDO
       ENDDO
       ENDDO
       ENDDO
@@ -689,6 +709,7 @@ C Finding swim direction to go to max grazer gain, D.T.
         print*,'size(PAR(1,:,1,1))',size(PAR(1,:,1,1))
         print*,'size(PAR(1,1,:,1))',size(PAR(1,1,:,1))
         print*,'size(PAR(1,1,1,:))',size(PAR(1,1,1,:))
+        print*,'max_loc',max_loc
 
       CALL TIMER_STOP('DARWIN_PLANKTON [DARWIN_FORCING]',myThid)
 
