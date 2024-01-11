@@ -689,27 +689,6 @@ C new code
       ENDDO
       ENDDO
 
-        print*,'imin',imin
-        print*,'imax',imax
-        print*,'jmin',jmin
-        print*,'jmax',jmax
-        print*,'nplnak',nplank
-        print*,'Nr',Nr
-        print*,'size_SwDr_in_forcing',SIZE(SwDr)
-        print*,'size_PAR_in_forcing',size(PAR)
-        print*,'1-OLx',1-OLx
-        print*,'sNx+OLx',sNx+OLx
-        print*,'1-OLy',1-OLy
-        print*,'sNy+OLy',sNy+OLy
-        print*,'size(SwDr(:,1,1,1))',size(SwDr(:,1,1,1))
-        print*,'size(SwDr(1,:,1,1))',size(SwDr(1,:,1,1))
-        print*,'size(SwDr(1,1,:,1))',size(SwDr(1,1,:,1))
-        print*,'size(SwDr(1,1,1,:))',size(SwDr(1,1,1,:))
-        print*,'size(PAR(:,1,1,1))',size(PAR(:,1,1,1))
-        print*,'size(PAR(1,:,1,1))',size(PAR(1,:,1,1))
-        print*,'size(PAR(1,1,:,1))',size(PAR(1,1,:,1))
-        print*,'size(PAR(1,1,1,:))',size(PAR(1,1,1,:))
-        print*,'max_loc',max_loc
 
       CALL TIMER_STOP('DARWIN_PLANKTON [DARWIN_FORCING]',myThid)
 
