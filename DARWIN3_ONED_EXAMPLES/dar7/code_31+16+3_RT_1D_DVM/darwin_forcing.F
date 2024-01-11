@@ -53,7 +53,7 @@ C  Ptrdummy             :: dummy for darwin2 compatibility
 C  myThid               :: thread number
       _RL Ptrdummy(*)
       _RL myTime
-      INTEGER iMin, iMax, jMin, jMax, bi, bj, myIter, myThid
+      INTEGER iMin, iMax, jMin, jMax, bi, bj, myIter, myThid      
 CEOP
 
 #ifdef ALLOW_DARWIN
@@ -102,9 +102,10 @@ C  k                    :: vertical level
       _RL ptr(nDarwin), gtr(nDarwin), PARl(nlam)
       _RL chlout(nPhoto)
       _RL diagsl(darwin_nDiag)
-      _RL predgrazc(1-OLx:sNx+OLx, 1-OLy:sNy+OLy, Nr,nplank)
+      _RL predgrazc(nplank)
+      _RL predgrazc_nd(1-OLx:sNx+OLx, 1-OLy:sNy+OLy, Nr,nplank)
       _RL maxgrgain(1-OLx:sNx+OLx,1-OLy:sNy+OLy,nplank)
-      _RL SwDr(1-OLx:sNx+OLx,1-OLy:sNy+OLy,Nr,nplank)
+      _RL, save :: SwDr(1-OLx:sNx+OLx,1-OLy:sNy+OLy,Nr,nplank) = 0 _d 0
       _RL photoTempFunc(nplank)
       _RL hetTempFunc(nplank)
       _RL grazTempFunc(nplank)
@@ -566,37 +567,6 @@ C-      default (face fit into global-IO-array)
 #endif /* ALLOW_EXCH2 */
 #endif /* DARWIN_DEBUG */
 
-C Finding swim direction to go to max grazer gain, D.T.
-      SwDr = 0 _d 0
-      maxgrgain = 0 _d 0
-      
-      DO i=iMin,iMax
-      DO j=jMin,jMax
-      DO iTr=1,nplank 
-      DO k=1,Nr !goes from surface to depth
-          IF (predgrazc(i,j,k,iTr) .GT. maxgrgain(i,j,iTr)) THEN
-              SwDr(i,j,k,iTr) = 1
-              maxgrgain(i,j,iTr) = predgrazc(i,j,k,iTr)                    
-          ELSEIF (predgrazc(i,j,k,iTr) .EQ. 
-     &         maxgrgain(i,j,iTr) .OR. k .EQ. 1) THEN
-              SwDr(i,j,k,iTr) = 0
-          ELSEIF (predgrazc(i,j,k,iTr) .LT. maxgrgain(i,j,iTr)) THEN
-              SwDr(i,j,k,iTr) = -1
-        ENDIF
-      ENDDO
-      ENDDO
-      ENDDO
-      ENDDO
-
-        print*,'imin',imin
-        print*,'imax',imax
-        print*,'jmin',jmin
-        print*,'jmax',jmax
-        print*,'nplnak',nplank
-        print*,'Nr',Nr
-        print*,'size_SwDr_in_forcing',SIZE(SwDr)
-        print*,'Size_diagsl_in_forcing',size(diagsl)
-
       do k=1,Nr
       do j=jMin,jMax
 #ifdef DARWIN_DEBUG
@@ -631,7 +601,7 @@ C Finding swim direction to go to max grazer gain, D.T.
      O                 chlout, diagsl,predgrazc,
      I                 PARl, gPARF, topPAR,
      I                 surfPAR,
-     I                 SwDr,
+     I                 SwDr(i,j,k,:),
      I                 photoTempFunc,
      I                 hetTempFunc,
      I                 grazTempFunc,
@@ -643,6 +613,9 @@ C Finding swim direction to go to max grazer gain, D.T.
         DO l=1,darwin_nDiag
          diags(i, j, k, l) = diagsl(l)
         ENDDO
+
+        predgrazc_nd(i,j,k,:) = predgrazc
+
 #ifdef DARWIN_ALLOW_CONS
         DARWIN_Nfix(i,j,k,bi,bj)   = DARWIN_Nfix(i,j,k,bi,bj)
      &                             + dTsub(k)*diagsl(iNfix)
@@ -675,6 +648,48 @@ C Finding swim direction to go to max grazer gain, D.T.
        enddo
       enddo
       enddo
+
+C Finding swim direction to go to max grazer gain, D.T.
+      maxgrgain = 0 _d 0
+      DO i=iMin,iMax
+      DO j=jMin,jMax
+      DO iTr=1,nplank 
+      DO k=1,Nr !goes from surface to depth
+          IF (predgrazc_nd(i,j,k,iTr) .GT. maxgrgain(i,j,iTr)) THEN
+              SwDr(i,j,k,iTr) = 1
+              maxgrgain(i,j,iTr) = predgrazc_nd(i,j,k,iTr)                    
+          ELSEIF (predgrazc_nd(i,j,k,iTr) .EQ. 
+     &         maxgrgain(i,j,iTr) .OR. k .EQ. 1) THEN
+              SwDr(i,j,k,iTr) = 0
+          ELSEIF (predgrazc_nd(i,j,k,iTr) .LT. maxgrgain(i,j,iTr)) THEN
+              SwDr(i,j,k,iTr) = -1
+        ENDIF
+      ENDDO
+      ENDDO
+      ENDDO
+      ENDDO
+
+        print*,'imin',imin
+        print*,'imax',imax
+        print*,'jmin',jmin
+        print*,'jmax',jmax
+        print*,'nplnak',nplank
+        print*,'Nr',Nr
+        print*,'size_SwDr_in_forcing',SIZE(SwDr)
+        print*,'size_PAR_in_forcing',size(PAR)
+        print*,'1-OLx',1-OLx
+        print*,'sNx+OLx',sNx+OLx
+        print*,'1-OLy',1-OLy
+        print*,'sNy+OLy',sNy+OLy
+        print*,'size(SwDr(:,1,1,1))',size(SwDr(:,1,1,1))
+        print*,'size(SwDr(1,:,1,1))',size(SwDr(1,:,1,1))
+        print*,'size(SwDr(1,1,:,1))',size(SwDr(1,1,:,1))
+        print*,'size(SwDr(1,1,1,:))',size(SwDr(1,1,1,:))
+        print*,'size(PAR(:,1,1,1))',size(PAR(:,1,1,1))
+        print*,'size(PAR(1,:,1,1))',size(PAR(1,:,1,1))
+        print*,'size(PAR(1,1,:,1))',size(PAR(1,1,:,1))
+        print*,'size(PAR(1,1,1,:))',size(PAR(1,1,1,:))
+
       CALL TIMER_STOP('DARWIN_PLANKTON [DARWIN_FORCING]',myThid)
 
 C === pre-sinking diags ================================================
