@@ -3,8 +3,9 @@
 # Calendar Parameters
 # *******************
  &CAL_NML
- TheCalendar='model',
- startDate_1=19850101,
+ TheCalendar='gregorian',
+# startDate_1=19850101,
+ startDate_1=19910101,
  startDate_2=000000,
  calendarDumps = .TRUE.
  &
