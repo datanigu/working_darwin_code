@@ -106,7 +106,7 @@ C  k                    :: vertical level
       _RL predgrazc_nd(1-OLx:sNx+OLx, 1-OLy:sNy+OLy, Nr,nplank)
 C      _RL maxgrgain(1-OLx:sNx+OLx, 1-OLy:sNy+OLy,nplank)
       _RL, save :: SwDr(1-OLx:sNx+OLx, 1-OLy:sNy+OLy,Nr,nplank) = 0 _d 0
-      _RL max_loc(1-OLx:sNx+OLx, 1-OLy:sNy+OLy,nplank)
+      INTEGER max_loc(1-OLx:sNx+OLx, 1-OLy:sNy+OLy,nplank)
       _RL photoTempFunc(nplank)
       _RL hetTempFunc(nplank)
       _RL grazTempFunc(nplank)
@@ -678,17 +678,16 @@ C new code
       DO j=jMin,jMax
       DO iTr=1,nplank
         IF (max_loc(i,j,iTr) .EQ. 1) THEN
-          SwDr(i, j, max_loc(i,j,iTr)+1:Nr,iTr) = 1
+          SwDr(i, j, max_loc(i,j,iTr)+1:Nr,iTr) = 1 _d 0
         ELSEIF (max_loc(i,j,iTr) .EQ. Nr) THEN
-          SwDr(i, j,1:max_loc(i,j,iTr)-1, iTr) = -1
+          SwDr(i, j,1:max_loc(i,j,iTr)-1, iTr) = -1 _d 0
         ELSE
-          SwDr(i, j,1:max_loc(i,j,iTr)-1, iTr) = -1
-          SwDr(i, j, max_loc(i,j,iTr)+1:Nr,iTr) = 1
+          SwDr(i, j,1:max_loc(i,j,iTr)-1, iTr) = -1 _d 0
+          SwDr(i, j, max_loc(i,j,iTr)+1:Nr,iTr) = 1 _d 0
         ENDIF
       ENDDO
       ENDDO
       ENDDO
-
 
       CALL TIMER_STOP('DARWIN_PLANKTON [DARWIN_FORCING]',myThid)
 
