@@ -105,6 +105,8 @@ C  k                    :: vertical level
       _RL predgrazc(nplank)
       _RL predgrazc_nd(1-OLx:sNx+OLx, 1-OLy:sNy+OLy, Nr,nplank)
 C      _RL maxgrgain(1-OLx:sNx+OLx, 1-OLy:sNy+OLy,nplank)
+      _RL bioswimzoo_dyn(nplank)
+      _RL bioswimzoo_dyn_nd(1-OLx:sNx+OLx, 1-OLy:sNy+OLy, Nr,nplank)
       _RL, save :: SwDr(1-OLx:sNx+OLx, 1-OLy:sNy+OLy,Nr,nplank) = 0 _d 0
       INTEGER max_loc(1-OLx:sNx+OLx, 1-OLy:sNy+OLy,nplank)
       _RL photoTempFunc(nplank)
@@ -599,7 +601,7 @@ C-      default (face fit into global-IO-array)
         CALL DARWIN_PLANKTON(
      I                 ptr,
      U                 gtr,
-     O                 chlout, diagsl,predgrazc,
+     O                 chlout, diagsl,predgrazc,bioswimzoo_dyn,
      I                 PARl, gPARF, topPAR,
      I                 surfPAR,
      I                 SwDr(i,j,k,:),
@@ -616,6 +618,7 @@ C-      default (face fit into global-IO-array)
         ENDDO
 
         predgrazc_nd(i,j,k,:) = predgrazc
+        bioswimzoo_dyn_nd(i,j,k,:) = bioswimzoo_dyn
 
 #ifdef DARWIN_ALLOW_CONS
         DARWIN_Nfix(i,j,k,bi,bj)   = DARWIN_Nfix(i,j,k,bi,bj)
@@ -706,8 +709,8 @@ C === pre-sinking diags ================================================
 
 C === sinking ==========================================================
       CALL TIMER_START('DARWIN_SINKING [DARWIN_FORCING]',myThid)
-      CALL DARWIN_SINKING( Ptracer,gPtr,dTsub,bi,bj,iMin,iMax,jMin,jMax,
-     &                  subTime,myIter,myThid )
+      CALL DARWIN_SINKING( Ptracer,bioswimzoo_dyn_nd,gPtr,dTsub,bi,bj,
+     &                  iMin,iMax,jMin,jMax,subTime,myIter,myThid )
       CALL TIMER_STOP ('DARWIN_SINKING [DARWIN_FORCING]',myThid)
 
 C === apply tendencies to tracers ======================================

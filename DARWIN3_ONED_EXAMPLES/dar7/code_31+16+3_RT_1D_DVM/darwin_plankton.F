@@ -6,7 +6,7 @@ C !INTERFACE: ==========================================================
       SUBROUTINE DARWIN_PLANKTON(
      I     Ptr,
      U     gTr,
-     O     chlout, diags,predgrazc,
+     O     chlout, diags,predgrazc,bioswimzoo_dyn,
      I     PAR, gPARF,topPAR,
      I     surfPAR,
      I     SwDr,
@@ -63,6 +63,7 @@ C !OUTPUT PARAMETERS: ==================================================
 C  chlout :: computed acclimated chlorophyll if not dynamic
       _RL chlout(nPhoto)
       _RL diags(darwin_nDiag)
+      _RL bioswimzoo_dyn(nplank)
 CEOP
 
 #ifdef ALLOW_DARWIN
@@ -1686,6 +1687,8 @@ C If PAR at top (topPAR) >0 (or above some level in future),
 C and PARtot > light_pref, swim down (toward light_pref)
 C If topPAR >0 and PARtot < light_pref, swim up 
 C If topPAR >0 and PARtot = light_pref, no swim
+C If topPAR >0 and topPAR < light_pref (i.e., surface
+C is darker than light preference), no swim
 
 C Night
 C If topPAR 0 (or below some light level in future),
@@ -1695,14 +1698,16 @@ C and grazphy = food max, don't swim; stay put
 
         IF (topPAR .GT. 0) THEN !Day
           IF (PARtot .GT. light_pref(jp)) THEN
-                bioswimzoo(jp) = -bioswimzoo(jp) 
+                bioswimzoo_dyn(jp) = -bioswimzoo(jp) 
           ELSEIF (PARtot. LT. light_pref(jp)) THEN
-                bioswimzoo(jp) = bioswimzoo(jp)
+                bioswimzoo_dyn(jp) = bioswimzoo(jp)
           ELSEIF (PARtot .EQ. light_pref(jp)) THEN
-                bioswimzoo(jp) = 0 _d 0
+                bioswimzoo_dyn(jp) = 0 _d 0
+          ELSEIF (topPAR .LT. light_pref(jp)) THEN
+                bioswimzoo_dyn(jp) = 0 _d 0
           ENDIF
         ELSE !Night
-             bioswimzoo(jp) = bioswimzoo(jp)*SwDr(jp) 
+             bioswimzoo_dyn(jp) = bioswimzoo(jp)*SwDr(jp) 
         ENDIF
 
 
