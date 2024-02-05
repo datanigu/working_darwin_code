@@ -655,21 +655,21 @@ C-      default (face fit into global-IO-array)
 
 C Finding swim direction to go to max grazer gain, D.T.
       SwDr = 0 _d 0
-C      max_loc = MAXLOC(predgrazc_nd, DIM=3)
-C      DO i=iMin,iMax
-C      DO j=jMin,jMax
-C      DO iTr=1,nplank
-C        IF (max_loc(i,j,iTr) .EQ. 1) THEN
-C          SwDr(i, j, max_loc(i,j,iTr)+1:Nr,iTr) = 1 _d 0
-C        ELSEIF (max_loc(i,j,iTr) .EQ. Nr) THEN
-C          SwDr(i, j,1:max_loc(i,j,iTr)-1, iTr) = -1 _d 0
-C        ELSE
-C          SwDr(i, j,1:max_loc(i,j,iTr)-1, iTr) = -1 _d 0
-C          SwDr(i, j, max_loc(i,j,iTr)+1:Nr,iTr) = 1 _d 0
-C        ENDIF
-C      ENDDO
-C      ENDDO
-C      ENDDO
+      max_loc = MAXLOC(predgrazc_nd, DIM=3)
+      DO i=iMin,iMax
+      DO j=jMin,jMax
+      DO iTr=1,nplank
+        IF (max_loc(i,j,iTr) .EQ. 1) THEN
+          SwDr(i, j, max_loc(i,j,iTr)+1:Nr,iTr) = 1 _d 0
+        ELSEIF (max_loc(i,j,iTr) .EQ. Nr) THEN
+          SwDr(i, j,1:max_loc(i,j,iTr)-1, iTr) = -1 _d 0
+        ELSE
+          SwDr(i, j,1:max_loc(i,j,iTr)-1, iTr) = -1 _d 0
+          SwDr(i, j, max_loc(i,j,iTr)+1:Nr,iTr) = 1 _d 0
+        ENDIF
+      ENDDO
+      ENDDO
+      ENDDO
 
       CALL TIMER_STOP('DARWIN_PLANKTON [DARWIN_FORCING]',myThid)
 
