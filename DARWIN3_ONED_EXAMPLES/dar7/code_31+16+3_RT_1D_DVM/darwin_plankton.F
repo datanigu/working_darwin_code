@@ -1323,18 +1323,19 @@ C       regulate grazing near full quota
         sumprey = MAX(0.0, sumprey - phygrazmin)
         sumpref = MAX(phygrazmin, sumpref)
 
-C        IF (isPrey .EQ. 1) THEN ! Not higher order predator, D.T.
+        IF (isPrey(jp) .EQ. 1) THEN ! No light-dependent predatation if prey, D.T.
 
         tmp = grazemax(jz)*grazTempFunc(jz)**tempGraz(jz)*
      &    (sumprey**hollexp/(sumprey**hollexp+kgrazesat(jz)**hollexp))*
      &    (1.0 - EXP(-inhib_graz*sumprey))**inhib_graz_exp
 
-C        ELSE 
-C Higher order predator grazing
-C        tmp = grazemaxHP(jz)*grazTempFunc(jz)**tempGraz(jp)*
-C     &     (sumprey/(sumprey + kgrazesatHP(jz))) * ((1-alphaV) + 
-C     &     alphaV * PARtot / (kgrazesatHP(jz) /
-C     &     ((kgrazesatHP(jz)+sumprey)*kgrazeirr(jz))+PARtot))
+        ELSE 
+C Light-dependent predation for predators (i.e., zooplankton)
+        tmp = grazemaxHP(jz)*grazTempFunc(jz)**tempGraz(jp)*
+     &     (sumprey/(sumprey + kgrazesatHP(jz))) * ((1-alphaV(jz)) + 
+     &     alphaV(jz) * PARtot / (kgrazesatHP(jz) /
+     &     ((kgrazesatHP(jz)+sumprey)*kgrazeirr(jz))+PARtot))
+        ENDIF
 
         predexpc  = 0.0 _d 0
         predexpn  = 0.0 _d 0
