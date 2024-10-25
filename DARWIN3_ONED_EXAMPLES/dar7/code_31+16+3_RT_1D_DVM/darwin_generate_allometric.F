@@ -485,6 +485,8 @@ C       Higher order predator rates
      &       biovol(jz)**b_grazemaxHP(gz)
         kgrazesatHP(jz) = a_kgrazesatHP(gz) *
      &       biovol(jz)**b_kgrazesatHP(gz)
+        kgrazeirr(jz) = a_kgrazeirr(gz) *
+     &       biovol(jz)**b_kgrazeirr(gz)
         alphaV(jz) = a_alphaV(gz)
         DO jp=1,nplank
           g = group(jp)
