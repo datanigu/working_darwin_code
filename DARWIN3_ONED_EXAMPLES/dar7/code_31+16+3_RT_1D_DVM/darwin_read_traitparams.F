@@ -489,7 +489,7 @@ C     used to be 120D-20 for phyto
 C     used to be 22.4
       a_kgrazesat = 1.00 _d 0
       b_kgrazesat = 0.00 _d 0      
-      a_grazemaxHP = 21.9 _d 0 / pday !extension of other pred
+      a_grazemaxHP = 0.0 _d 0!21.9 _d 0 / pday !extension of other pred
       b_grazemaxHP = -0.16 _d 0 ! extension of other predators
       a_kgrazesatHP = 1.0 _d 0 / val_R_NC_zoo !Bianchi et al 2013
       b_kgrazesatHP = 0.0 _d 0
