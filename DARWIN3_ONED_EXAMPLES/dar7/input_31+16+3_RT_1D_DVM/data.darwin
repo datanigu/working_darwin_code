@@ -146,7 +146,7 @@
 #
 # a_bioswimzoo(:) = 8*0., 0.03, 1*0. !This is the ideal speed
  a_bioswimzoo(:) = 8*0., 0.003, 1*0.,
- b_bioswimzoo(:) = 8*0., 10.0, 1*0.0,
+ b_bioswimzoo(:) = 8*0., 0.0, 1*0.0,
  
 
  /
