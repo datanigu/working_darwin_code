@@ -203,8 +203,10 @@
      &    a_bioswim,
      &    a_bioswim_denom,
      &    b_bioswim,
-     &    a_bioswimzoo,
-     &    b_bioswimzoo,
+C     &    a_bioswimzoo,
+C     &    b_bioswimzoo,
+     &    a_bioswimDVM,
+     &    b_bioswimDVM,
      &    a_ppSig,
      &    a_ppOpt,
      &    b_ppOpt,
@@ -502,8 +504,10 @@ C     used to be 22.4
       a_bioswim = 0.00 _d 0 / pday
       a_bioswim_denom = 1. _d 0
       b_bioswim = 0.18 _d 0
-      a_bioswimzoo = 3.0 _d -2 !Bianchi et al. 2013
-      b_bioswimzoo = 0.00 _d 0 !Not sure if should be size dependent
+C      a_bioswimzoo = 3.0 _d -2 !replaced by bioswimDVM
+C      b_bioswimzoo = 0.00 _d 0 
+      a_bioswimDVM = 3.0 _d -2 !Bianchi et al. 2013
+      b_bioswimDVM = 0.00 _d 0 !Not sure if should be size dependent
       a_ppSig = 1.0 _d 0
       a_ppOpt = 1024. _d 0
       b_ppOpt = 0.00 _d 0

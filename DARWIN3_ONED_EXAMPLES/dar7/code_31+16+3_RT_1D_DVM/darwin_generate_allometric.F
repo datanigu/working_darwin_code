@@ -258,7 +258,7 @@ C plankton elemental ratios
 C plankton sinking and swimming
         biosink(jp) = a_biosink(g) * biovol(jp)**b_biosink(g)
         bioswim(jp) = a_bioswim(g) * biovol(jp)**b_bioswim(g)
-        bioswimzoo(jp) = a_bioswimzoo(g) * biovol(jp)**b_bioswimzoo(g)
+        bioswimDVM(jp) = a_bioswimDVM(g) * biovol(jp)**b_bioswimDVM(g)
 
 C respRate rate is given in terms of carbon content
         qcarbon(jp) = a_qcarbon(g) * biovol(jp)**b_qcarbon(g)

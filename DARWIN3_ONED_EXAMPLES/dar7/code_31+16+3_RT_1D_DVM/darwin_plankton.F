@@ -6,7 +6,8 @@ C !INTERFACE: ==========================================================
       SUBROUTINE DARWIN_PLANKTON(
      I     Ptr,
      U     gTr,
-     O     chlout, diags,predgrazc,bioswimzoo_dyn,
+     O     chlout, diags,predgrazc,
+     O     bioswimDVMup,bioswimDVMdn,
      I     PAR, gPARF,topPAR,
      I     surfPAR,
      I     SwDr,
@@ -61,9 +62,12 @@ C  gTr    :: accumulates computed tendencies
 
 C !OUTPUT PARAMETERS: ==================================================
 C  chlout :: computed acclimated chlorophyll if not dynamic
+      _RL bioswimDVMup(nplank) 
+      _RL bioswimDVMdn(nplank)
       _RL chlout(nPhoto)
       _RL diags(darwin_nDiag)
-      _RL bioswimzoo_dyn(nplank)
+C      _RL bioswimzoo_dyn(nplank)
+ 
 CEOP
 
 #ifdef ALLOW_DARWIN
@@ -1712,16 +1716,31 @@ C and grazphy = food max, don't swim; stay put
 
         IF (topPAR .GT. 0) THEN !Day
           IF (PARtot .GT. light_pref(jp)) THEN
-                bioswimzoo_dyn(jp) = -bioswimzoo(jp) 
+C                bioswimzoo_dyn(jp) = -bioswimzoo(jp) 
+                bioswimDVMup(jp) = 0 _d 0
+                bioswimDVMdn(jp) = -bioswimDVM(jp)
           ELSEIF (PARtot. LT. light_pref(jp)) THEN
-                bioswimzoo_dyn(jp) = bioswimzoo(jp)
+C                bioswimzoo_dyn(jp) = bioswimzoo(jp)
+                 bioswimDVMup(jp) = bioswimDVM(jp)
+                 bioswimDVMdn(jp) = 0 _d 0
           ELSEIF (PARtot .EQ. light_pref(jp)) THEN
-                bioswimzoo_dyn(jp) = 0 _d 0
+C                bioswimzoo_dyn(jp) = 0 _d 0
+                 bioswimDVMup(jp) = 0 _d 0
+                 bioswimDVMdn(jp) = 0 _d 0
           ELSEIF (topPAR .LT. light_pref(jp)) THEN
-                bioswimzoo_dyn(jp) = 0 _d 0
+C                bioswimzoo_dyn(jp) = 0 _d 0
+                 bioswimDVMup(jp) = 0 _d 0
+                 bioswimDVMdn(jp) = 0 _d 0
           ENDIF
         ELSE !Night
-             bioswimzoo_dyn(jp) = bioswimzoo(jp)*SwDr(jp) 
+C             bioswimzoo_dyn(jp) = bioswimzoo(jp)*SwDr(jp)
+          IF (SwDr(jp) .GT. 0.0) THEN
+                 bioswimDVMup(jp) = bioswimDVM(jp)
+                 bioswimDVMdn(jp) = 0 _d 0
+          ELSE 
+                 bioswimDVMup(jp) = 0 _d 0
+                 bioswimDVMdn(jp) = -bioswimDVM(jp)
+          ENDIF
         ENDIF
 
 
