@@ -1718,7 +1718,7 @@ C and grazphy = food max, don't swim; stay put
           IF (PARtot .GT. light_pref(jp)) THEN
 C                bioswimzoo_dyn(jp) = -bioswimzoo(jp) 
                 bioswimDVMup(jp) = 0 _d 0
-                bioswimDVMdn(jp) = -bioswimDVM(jp)
+                bioswimDVMdn(jp) = bioswimDVM(jp)
           ELSEIF (PARtot. LT. light_pref(jp)) THEN
 C                bioswimzoo_dyn(jp) = bioswimzoo(jp)
                  bioswimDVMup(jp) = bioswimDVM(jp)
@@ -1739,7 +1739,7 @@ C             bioswimzoo_dyn(jp) = bioswimzoo(jp)*SwDr(jp)
                  bioswimDVMdn(jp) = 0 _d 0
           ELSE 
                  bioswimDVMup(jp) = 0 _d 0
-                 bioswimDVMdn(jp) = -bioswimDVM(jp)
+                 bioswimDVMdn(jp) = bioswimDVM(jp)
           ENDIF
         ENDIF
 
