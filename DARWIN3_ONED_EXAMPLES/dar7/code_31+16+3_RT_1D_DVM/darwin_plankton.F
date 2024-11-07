@@ -1737,6 +1737,9 @@ C             bioswimzoo_dyn(jp) = bioswimzoo(jp)*SwDr(jp)
           IF (SwDr(jp) .GT. 0.0) THEN
                  bioswimDVMup(jp) = bioswimDVM(jp)
                  bioswimDVMdn(jp) = 0 _d 0
+          ELSEIF (SwDr(jp) .EQ. 0.0) THEN
+                 bioswimDVMup(jp) = 0 _d 0
+                 bioswimDVMdn(jp) = 0 _d 0
           ELSE 
                  bioswimDVMup(jp) = 0 _d 0
                  bioswimDVMdn(jp) = bioswimDVM(jp)
