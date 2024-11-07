@@ -1327,7 +1327,7 @@ C       regulate grazing near full quota
         sumprey = MAX(0.0, sumprey - phygrazmin)
         sumpref = MAX(phygrazmin, sumpref)
 
-        IF (isPred(jp) .EQ. 0) THEN ! No light-dependent predatation if zoopl pred, D.T.
+        IF (isPred(jz) .EQ. 0) THEN ! No light-dependent predatation if zoopl pred, D.T.
 
         tmp = grazemax(jz)*grazTempFunc(jz)**tempGraz(jz)*
      &    (sumprey**hollexp/(sumprey**hollexp+kgrazesat(jz)**hollexp))*
