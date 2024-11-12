@@ -107,11 +107,11 @@ C  k                    :: vertical level
 C      _RL maxgrgain(1-OLx:sNx+OLx, 1-OLy:sNy+OLy,nplank)
 C      _RL bioswimzoo_dyn(nplank)
 C      _RL bioswimzoo_dyn_nd(1-OLx:sNx+OLx, 1-OLy:sNy+OLy, Nr,nplank)
-      _RL bioswimDVMup(nplank)
-      _RL bioswimDVMdn(nplank)
-      _RL bioswimDVMup_nd(1-OLx:sNx+OLx, 1-OLy:sNy+OLy, Nr,nplank)
-      _RL bioswimDVMdn_nd(1-OLx:sNx+OLx, 1-OLy:sNy+OLy, Nr,nplank)
-      _RL, save :: SwDr(1-OLx:sNx+OLx, 1-OLy:sNy+OLy,Nr,nplank) = 0 _d 0
+      _RL bioswimDVMup(1-OLx:sNx+OLx, 1-OLy:sNy+OLy, Nr,nplank)
+      _RL bioswimDVMdn(1-OLx:sNx+OLx, 1-OLy:sNy+OLy, Nr,nplank)
+C      _RL bioswimDVMup_nd(1-OLx:sNx+OLx, 1-OLy:sNy+OLy, Nr,nplank)
+C      _RL bioswimDVMdn_nd(1-OLx:sNx+OLx, 1-OLy:sNy+OLy, Nr,nplank)
+      _RL SwDr(1-OLx:sNx+OLx, 1-OLy:sNy+OLy,Nr,nplank) 
       INTEGER max_loc(1-OLx:sNx+OLx, 1-OLy:sNy+OLy,nplank)
       _RL photoTempFunc(nplank)
       _RL hetTempFunc(nplank)
@@ -606,10 +606,8 @@ C-      default (face fit into global-IO-array)
      I                 ptr,
      U                 gtr,
      O                 chlout, diagsl,predgrazc,
-     O                 bioswimDVMup,bioswimDVMdn,
      I                 PARl, gPARF, topPAR,
      I                 surfPAR,
-     I                 SwDr(i,j,k,:),
      I                 photoTempFunc,
      I                 hetTempFunc,
      I                 grazTempFunc,
@@ -623,9 +621,6 @@ C-      default (face fit into global-IO-array)
         ENDDO
 
         predgrazc_nd(i,j,k,:) = predgrazc
-C        bioswimzoo_dyn_nd(i,j,k,:) = bioswimzoo_dyn
-        bioswimDVMup_nd(i,j,k,:) = bioswimDVMup
-        bioswimDVMdn_nd(i,j,k,:) = bioswimDVMdn
 
 #ifdef DARWIN_ALLOW_CONS
         DARWIN_Nfix(i,j,k,bi,bj)   = DARWIN_Nfix(i,j,k,bi,bj)
@@ -656,10 +651,11 @@ C        bioswimzoo_dyn_nd(i,j,k,:) = bioswimzoo_dyn
          gPtr(i, j, k, iTr) = gtr(iTr)
         ENDDO
        endif
-       enddo
-      enddo
-      enddo
+       enddo !end i
+      enddo !end j
+      enddo !end k
 
+C ######### Fixing ###########
 C Finding swim direction to go to max grazer gain, D.T.
       SwDr = 0 _d 0
       max_loc = MAXLOC(predgrazc_nd, DIM=3)
@@ -674,9 +670,57 @@ C Finding swim direction to go to max grazer gain, D.T.
           SwDr(i, j,1:max_loc(i,j,iTr)-1, iTr) = -1 _d 0
           SwDr(i, j, max_loc(i,j,iTr)+1:Nr,iTr) = 1 _d 0
         ENDIF
-      ENDDO
-      ENDDO
-      ENDDO
+
+C Find swim direction based on light and max grazer gain
+C Day
+C If PAR at top (topPAR) >0 (or above some level in future), 
+C and PARtot > light_pref, swim down (toward light_pref)
+C If topPAR >0 and PARtot < light_pref, swim up 
+C If topPAR >0 and PARtot = light_pref, no swim
+C If topPAR >0 and topPAR < light_pref (i.e., surface
+C is darker than light preference), no swim
+
+C Night
+C If topPAR 0 (or below some light level in future),
+C and grazphy < food max, swim toward food max
+C If topPAR 0 (or below some light level in future),
+C and grazphy = food max, don't swim; stay put
+       DO k=1,Nr
+         IF (sum(topPAR(i,j,:)) .GT. 0) THEN !Day
+           IF (sum(topPAR(i,j,:)) .LT. light_pref(iTr)) THEN!Used to be last
+              bioswimDVMup(i,j,k, iTr) = 0 _d 0
+              bioswimDVMdn(i,j,k, iTr) = 0 _d 0
+           ELSEIF (sum(PARl) .GT. light_pref(iTr)) THEN
+              bioswimDVMup(i,j,k, iTr) = 0 _d 0
+              bioswimDVMdn(i,j,k, iTr) = bioswimDVM(iTr)
+           ELSEIF (sum(PARl). LT. light_pref(iTr)) THEN
+              bioswimDVMup(i,j,k, iTr) = bioswimDVM(iTr)
+              bioswimDVMdn(i,j,k, iTr) = 0 _d 0
+           ELSEIF (sum(PARl) .EQ. light_pref(iTr)) THEN
+              bioswimDVMup(i,j,k, iTr) = 0 _d 0
+              bioswimDVMdn(i,j,k, iTr) = 0 _d 0
+        ENDIF
+       ELSE !Night
+        IF (SwDr(i,j,k,iTr) .GT. 0.0) THEN
+              bioswimDVMup(i,j,k, iTr) = bioswimDVM(iTr)
+              bioswimDVMdn(i,j,k, iTr) = 0 _d 0
+        ELSEIF (SwDr(i,j,k,iTr) .EQ. 0.0) THEN
+               bioswimDVMup(i,j,k, iTr) = 0 _d 0
+               bioswimDVMdn(i,j,k, iTr) = 0 _d 0
+        ELSE 
+               bioswimDVMup(i,j,k, iTr) = 0 _d 0
+               bioswimDVMdn(i,j,k, iTr) = bioswimDVM(iTr)
+        ENDIF
+        ENDIF
+       ENDDO !k
+       ENDDO !iTr
+       ENDDO !j
+       ENDDO !
+
+
+
+C ############## End fix D.T.--and make sure goes with call to sinking ############
+
 
       CALL TIMER_STOP('DARWIN_PLANKTON [DARWIN_FORCING]',myThid)
 
@@ -695,7 +739,7 @@ C === pre-sinking diags ================================================
 
 C === sinking ==========================================================
       CALL TIMER_START('DARWIN_SINKING [DARWIN_FORCING]',myThid)
-      CALL DARWIN_SINKING( Ptracer,bioswimDVMup_nd,bioswimDVMdn_nd,
+      CALL DARWIN_SINKING( Ptracer,bioswimDVMup,bioswimDVMdn,
      &                  gPtr,dTsub,bi,bj,
      &                  iMin,iMax,jMin,jMax,subTime,myIter,myThid )
       CALL TIMER_STOP ('DARWIN_SINKING [DARWIN_FORCING]',myThid)

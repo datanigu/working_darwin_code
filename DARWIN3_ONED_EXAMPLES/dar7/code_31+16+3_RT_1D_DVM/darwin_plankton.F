@@ -1714,37 +1714,37 @@ C and grazphy < food max, swim toward food max
 C If topPAR 0 (or below some light level in future),
 C and grazphy = food max, don't swim; stay put
 
-        IF (topPAR .GT. 0) THEN !Day
-          IF (PARtot .GT. light_pref(jp)) THEN
-C                bioswimzoo_dyn(jp) = -bioswimzoo(jp) 
-                bioswimDVMup(jp) = 0 _d 0
-                bioswimDVMdn(jp) = bioswimDVM(jp)
-          ELSEIF (PARtot. LT. light_pref(jp)) THEN
-C                bioswimzoo_dyn(jp) = bioswimzoo(jp)
-                 bioswimDVMup(jp) = bioswimDVM(jp)
-                 bioswimDVMdn(jp) = 0 _d 0
-          ELSEIF (PARtot .EQ. light_pref(jp)) THEN
-C                bioswimzoo_dyn(jp) = 0 _d 0
-                 bioswimDVMup(jp) = 0 _d 0
-                 bioswimDVMdn(jp) = 0 _d 0
-          ELSEIF (topPAR .LT. light_pref(jp)) THEN
-C                bioswimzoo_dyn(jp) = 0 _d 0
-                 bioswimDVMup(jp) = 0 _d 0
-                 bioswimDVMdn(jp) = 0 _d 0
-          ENDIF
-        ELSE !Night
-C             bioswimzoo_dyn(jp) = bioswimzoo(jp)*SwDr(jp)
-          IF (SwDr(jp) .GT. 0.0) THEN
-                 bioswimDVMup(jp) = bioswimDVM(jp)
-                 bioswimDVMdn(jp) = 0 _d 0
-          ELSEIF (SwDr(jp) .EQ. 0.0) THEN
-                 bioswimDVMup(jp) = 0 _d 0
-                 bioswimDVMdn(jp) = 0 _d 0
-          ELSE 
-                 bioswimDVMup(jp) = 0 _d 0
-                 bioswimDVMdn(jp) = bioswimDVM(jp)
-          ENDIF
-        ENDIF
+C        IF (topPAR .GT. 0) THEN !Day
+C          IF (PARtot .GT. light_pref(jp)) THEN
+CC                bioswimzoo_dyn(jp) = -bioswimzoo(jp) 
+C                bioswimDVMup(jp) = 0 _d 0
+C                bioswimDVMdn(jp) = bioswimDVM(jp)
+C          ELSEIF (PARtot. LT. light_pref(jp)) THEN
+CC                bioswimzoo_dyn(jp) = bioswimzoo(jp)
+C                 bioswimDVMup(jp) = bioswimDVM(jp)
+C                 bioswimDVMdn(jp) = 0 _d 0
+C          ELSEIF (PARtot .EQ. light_pref(jp)) THEN
+CC                bioswimzoo_dyn(jp) = 0 _d 0
+C                 bioswimDVMup(jp) = 0 _d 0
+C                 bioswimDVMdn(jp) = 0 _d 0
+C          ELSEIF (topPAR .LT. light_pref(jp)) THEN
+CC                bioswimzoo_dyn(jp) = 0 _d 0
+C                 bioswimDVMup(jp) = 0 _d 0
+C                 bioswimDVMdn(jp) = 0 _d 0
+C          ENDIF
+C        ELSE !Night
+CC             bioswimzoo_dyn(jp) = bioswimzoo(jp)*SwDr(jp)
+C          IF (SwDr(jp) .GT. 0.0) THEN
+C                 bioswimDVMup(jp) = bioswimDVM(jp)
+C                 bioswimDVMdn(jp) = 0 _d 0
+C          ELSEIF (SwDr(jp) .EQ. 0.0) THEN
+C                 bioswimDVMup(jp) = 0 _d 0
+C                 bioswimDVMdn(jp) = 0 _d 0
+C          ELSE 
+C                 bioswimDVMup(jp) = 0 _d 0
+C                 bioswimDVMdn(jp) = bioswimDVM(jp)
+C          ENDIF
+C        ENDIF
 
 
         ENDIF !End predator designation for egestion and swimming
